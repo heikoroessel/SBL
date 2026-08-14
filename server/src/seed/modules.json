@@ -1,0 +1,578 @@
+[
+  {
+    "number": 1,
+    "title": "Geschichten statt Appelle",
+    "subtitle": "Wie du mit anschlussfähigen Narrativen Kultur, Change und Strategie\nwirklich verankerst",
+    "description": "In diesem Modul lernst du, wie du Geschichten als Führungsinstrument einsetzt: nicht als Märchen, sondern als Werkzeug, mit dem du deine Strategie verankerst, Change-Widerstand abbaust und für echtes Alignment sorgst.",
+    "tasks": [
+      {
+        "field": "kundenbeziehungen",
+        "perspective": "kultur",
+        "type": "pflicht",
+        "question_1": "Welche Geschichte erzählst du über deine Kunden -- und welche Geschichte erzählen sie über dich?",
+        "question_2": "Wie verändert sich die Beziehung, wenn du Appelle durch Geschichten ersetzt?"
+      },
+      {
+        "field": "partnerschaften",
+        "perspective": "kultur",
+        "type": "pflicht",
+        "question_1": "Welches Narrativ trägt deine wichtigsten Partnerschaften -- und ist es noch lebendig?",
+        "question_2": "Welche Geschichte könntest du über eine Partnerschaft neu erzählen, um sie zu stärken?"
+      },
+      {
+        "field": "nutzenversprechen",
+        "perspective": "beobachtung",
+        "type": "pflicht",
+        "question_1": "Welche Geschichte steckt hinter deinem Nutzenversprechen -- und wer hat sie ursprünglich geschrieben?",
+        "question_2": "Wenn du von außen auf dein Nutzenversprechen schaust: Welches Narrativ nimmst du wahr -- und stimmt es mit deiner Absicht überein?"
+      },
+      {
+        "field": "kanaele",
+        "perspective": "beobachtung",
+        "type": "optional",
+        "question_1": "Welche Geschichte transportieren deine Kanäle über dein Unternehmen -- bewusst oder unbewusst?",
+        "question_2": "Was würde ein Fremder über dein Unternehmen denken, wenn er nur deine Kanäle sieht?"
+      }
+    ]
+  },
+  {
+    "number": 2,
+    "title": "Volle Konzentration bei mehr Gelassenheit",
+    "subtitle": "Das Machbare machen, ohne das Unmachbare zu wollen",
+    "description": "In diesem Modul lernst du, wie du deinen Fokus auf das Wesentliche richtest, innere Gelassenheit stärkst und deine Energie gezielt für das Machbare einsetzt -- anstatt dich im Kampf mit dem Unmachbaren zu erschöpfen.",
+    "tasks": [
+      {
+        "field": "schluesselaktivitaeten",
+        "perspective": "lernen",
+        "type": "pflicht",
+        "question_1": "Welche deiner Schlüsselaktivitäten kosten dich unverhältnismäßig viel Energie -- und warum hältst du daran fest?",
+        "question_2": "Was würde passieren, wenn du eine Aktivität einfach weglässt? Was lernst du gerade darüber, was wirklich wichtig ist?"
+      },
+      {
+        "field": "ressourcen",
+        "perspective": "lernen",
+        "type": "pflicht",
+        "question_1": "Wie entwickelt sich dein System im Umgang mit knappen Ressourcen -- was lernst du darüber, wie du Prioritäten setzt?",
+        "question_2": "Welche Ressource hast du als unmachbar abgeschrieben -- obwohl sie vielleicht nur anders zugänglich wäre?"
+      },
+      {
+        "field": "kostenstruktur",
+        "perspective": "beobachtung",
+        "type": "pflicht",
+        "question_1": "Was beobachtest du an dir selbst, wenn du auf deine Kostenstruktur schaust -- Angst, Kontrolle, Gelassenheit?",
+        "question_2": "Welche Kosten entstehen, weil du das Unmachbare trotzdem versuchst zu kontrollieren?"
+      },
+      {
+        "field": "einnahmequellen",
+        "perspective": "beobachtung",
+        "type": "optional",
+        "question_1": "Wo erschöpfst du dich in der Jagd nach Einnahmen, die eigentlich nicht zu dir passen?",
+        "question_2": "Was wäre, wenn du dich auf weniger Einnahmequellen fokussierst -- mehr Gelassenheit oder mehr Risiko?"
+      }
+    ]
+  },
+  {
+    "number": 3,
+    "title": "Vom Bauarbeiter zum Architekten",
+    "subtitle": "Wie du dein Unternehmen systemisch baust",
+    "description": "Das Modul zeigt dir, wie du vom „Bauarbeiter\" zum „Architekten\" wirst: vom reaktiven Macher zum systemischen Gestalter. Statt nur Steine zu schleppen, lernst du, die Strukturen und Muster zu erkennen, die dein Unternehmen tragen -- und wie du sie so gestalten kannst, dass sie dich entlasten und nachhaltiges Wachstum ermöglichen.",
+    "tasks": [
+      {
+        "field": "schluesselaktivitaeten",
+        "perspective": "entscheidung",
+        "type": "pflicht",
+        "question_1": "Welche Aktivitäten entscheidest du immer noch selbst, obwohl du sie längst delegieren könntest -- und warum?",
+        "question_2": "Welche Entscheidungsprämisse hält dich im Bauarbeitermodus: Kontrolle, Qualitätsanspruch oder Vertrauen?"
+      },
+      {
+        "field": "ressourcen",
+        "perspective": "entscheidung",
+        "type": "pflicht",
+        "question_1": "Wie entscheidest du, welche Ressourcen du aufbaust -- und welche du einkaufst oder weglässt?",
+        "question_2": "Welche Ressource fehlt dir als Architekt, die du als Bauarbeiter nie gebraucht hast?"
+      },
+      {
+        "field": "partnerschaften",
+        "perspective": "beobachtung",
+        "type": "pflicht",
+        "question_1": "Wenn du auf deine Partnerschaften schaust: Wer ist Partner weil du ihn bewusst gewählt hast -- und wer weil er einfach da war?",
+        "question_2": "Was beobachtest du in dir, wenn du Verantwortung an Partner abgibst -- Erleichterung oder Kontrollverlust?"
+      },
+      {
+        "field": "kostenstruktur",
+        "perspective": "beobachtung",
+        "type": "optional",
+        "question_1": "Welche Kosten entstehen dadurch, dass du noch zu oft Bauarbeiter statt Architekt bist?",
+        "question_2": "Was würde sich in deiner Kostenstruktur verändern, wenn du konsequenter auf die Architektenrolle setzt?"
+      }
+    ]
+  },
+  {
+    "number": 4,
+    "title": "Radar statt Rückspiegel",
+    "subtitle": "Systemisch führen in unsicheren Zeiten",
+    "description": "Systemische Führung bedeutet, den Blick nach vorn zu richten: mit einem Radar, das schwache Signale erkennt, Muster wahrnimmt und Veränderungen antizipiert. In diesem Modul lernst du, wie du in unsicheren Zeiten Orientierung gibst -- nicht durch starre Pläne, sondern durch bewegliche Strukturen, klare Kommunikation und die Fähigkeit, mit dem Unvorhersehbaren konstruktiv umzugehen.",
+    "tasks": [
+      {
+        "field": "kundensegmente",
+        "perspective": "entscheidung",
+        "type": "pflicht",
+        "question_1": "Nach welchen Prämissen entscheidest du, welche Kundensegmente du bearbeitest -- und welche du nicht siehst?",
+        "question_2": "Welche schwachen Signale aus deinen Kundensegmenten ignorierst du gerade -- weil sie nicht ins bisherige Bild passen?"
+      },
+      {
+        "field": "nutzenversprechen",
+        "perspective": "entscheidung",
+        "type": "pflicht",
+        "question_1": "Wie lange gilt dein heutiges Nutzenversprechen noch -- und nach welchen Kriterien entscheidest du, wann es Zeit für Veränderung ist?",
+        "question_2": "Was müsste passieren, damit du dein Nutzenversprechen grundlegend überarbeitest -- und warum wartest du noch?"
+      },
+      {
+        "field": "kanaele",
+        "perspective": "beobachtung",
+        "type": "pflicht",
+        "question_1": "Wenn du auf deine Kanäle schaust: Welche Signale aus dem Markt kommen dort an -- und welche nicht?",
+        "question_2": "Was beobachtest du an dir als Führungsperson, wenn Signale deinem bisherigen Bild widersprechen?"
+      },
+      {
+        "field": "partnerschaften",
+        "perspective": "beobachtung",
+        "type": "optional",
+        "question_1": "Welche Partnerschaften funktionieren als Radar -- die dir Signale geben, die du alleine nicht siehst?",
+        "question_2": "Welche Partnerschaft solltest du aufbauen, um blinde Flecken in deinem Radar zu schließen?"
+      }
+    ]
+  },
+  {
+    "number": 5,
+    "title": "Beziehungen als ROI-Faktor",
+    "subtitle": "Ohne Vertrauen kein Umsatz, ohne Resonanz keine Leistung",
+    "description": "In diesem Modul erlebst du am eigenen Körper und Geist, was es bedeutet, systemisch zu handeln: Beziehungen so zu gestalten, dass Vertrauen entsteht, Autonomie gewahrt bleibt und Zusammenarbeit gelingt.",
+    "tasks": [
+      {
+        "field": "kundenbeziehungen",
+        "perspective": "kultur",
+        "type": "pflicht",
+        "question_1": "Wie ist die Kultur eurer Kundenbeziehungen -- Gestaltung oder Diktat, Resonanz oder Transaktion?",
+        "question_2": "Welche kulturellen Muster in deinem Unternehmen fördern Kundenvertrauen -- und welche untergraben es?"
+      },
+      {
+        "field": "partnerschaften",
+        "perspective": "kultur",
+        "type": "pflicht",
+        "question_1": "Was ist die kulturelle Basis deiner wichtigsten Partnerschaft -- gemeinsame Werte oder gemeinsame Interessen?",
+        "question_2": "Wo fehlt in einer Partnerschaft echte Resonanz -- und was wäre nötig, um sie herzustellen?"
+      },
+      {
+        "field": "einnahmequellen",
+        "perspective": "lernen",
+        "type": "pflicht",
+        "question_1": "Was lernst du aus den Einnahmequellen, die am stärksten auf Vertrauen und Beziehung beruhen -- was macht sie anders?",
+        "question_2": "Wie entwickelt sich dein Unternehmen als System, wenn es Beziehungsqualität als ROI-Faktor ernst nimmt?"
+      },
+      {
+        "field": "kundensegmente",
+        "perspective": "lernen",
+        "type": "optional",
+        "question_1": "Bei welchen Kundensegmenten entstehen die tragfähigsten Beziehungen -- und was haben diese Kunden gemeinsam?",
+        "question_2": "Welches Segment bearbeitest du, obwohl die Resonanz fehlt -- und welchen Preis zahlst du dafür?"
+      }
+    ]
+  },
+  {
+    "number": 6,
+    "title": "Nachhaltig Ordnung schaffen",
+    "subtitle": "5S und Lean Management, das wirklich funktioniert",
+    "description": "Lean Management und insbesondere die 5S-Methode versprechen Abhilfe -- doch oft bleibt es bei oberflächlichen Aktionen. In diesem Modul lernst du, wie 5S und Lean wirklich wirken können: nicht als kurzfristiges Aufräumen, sondern als nachhaltige Kultur der Klarheit, Effizienz und Verlässlichkeit.",
+    "tasks": [
+      {
+        "field": "schluesselaktivitaeten",
+        "perspective": "kultur",
+        "type": "pflicht",
+        "question_1": "Welche kulturellen Muster verhindern, dass Ordnung und Struktur in deinen Kernprozessen nachhaltig halten?",
+        "question_2": "Wie ticken die Menschen in deinem System beim Thema Ordnung -- ist Struktur Entlastung oder Einschränkung?"
+      },
+      {
+        "field": "ressourcen",
+        "perspective": "kultur",
+        "type": "pflicht",
+        "question_1": "Welche Ressourcen werden durch Unordnung und Ineffizienz still verbraucht -- ohne dass es jemand benennt?",
+        "question_2": "Wie ist die kulturelle Haltung zu Ressourcenverschwendung in deinem Unternehmen -- normal, beschämend, unsichtbar?"
+      },
+      {
+        "field": "kostenstruktur",
+        "perspective": "entscheidung",
+        "type": "pflicht",
+        "question_1": "Welche Kosten entstehen durch fehlende Ordnung und Lean-Denkweise -- und warum werden sie nicht als Entscheidungsthema behandelt?",
+        "question_2": "Wie entscheidest du, welche Ordnungssysteme wirklich in dein Unternehmen passen -- und welche nur auf dem Papier funktionieren?"
+      },
+      {
+        "field": "partnerschaften",
+        "perspective": "entscheidung",
+        "type": "optional",
+        "question_1": "Welche Partnerschaft leidet unter unklaren Prozessen und fehlender Ordnung an euren Schnittstellen?",
+        "question_2": "Was würde sich in einer wichtigen Partnerschaft verändern, wenn ihr gemeinsame Standards etabliert?"
+      }
+    ]
+  },
+  {
+    "number": 7,
+    "title": "Dynamiken sichtbar machen",
+    "subtitle": "Muster in Organisationen erkennen und verändern",
+    "description": "Systemische Aufstellungen machen diese Beziehungsdynamiken sichtbar -- und eröffnen damit neue Gestaltungsmöglichkeiten. In diesem Modul erlebst du, wie Aufstellungen im Business-Kontext genutzt werden können, um Klarheit zu schaffen, Blockaden zu lösen und neue Handlungsperspektiven zu entwickeln.",
+    "tasks": [
+      {
+        "field": "kundenbeziehungen",
+        "perspective": "kultur",
+        "type": "pflicht",
+        "question_1": "Welche unsichtbaren Beziehungsmuster prägen den Umgang mit deinen Kunden -- Loyalität, Distanz, Abhängigkeit?",
+        "question_2": "Was würde eine systemische Aufstellung deiner Kundenbeziehungen sichtbar machen, das im Alltag verborgen bleibt?"
+      },
+      {
+        "field": "partnerschaften",
+        "perspective": "kultur",
+        "type": "pflicht",
+        "question_1": "Welche Dynamiken zwischen dir und deinen Partnern sind unausgesprochen -- und was kostet das?",
+        "question_2": "Wenn du eine Partnerschaft aufstellst: Wer steht nah, wer steht fern -- und warum?"
+      },
+      {
+        "field": "schluesselaktivitaeten",
+        "perspective": "beobachtung",
+        "type": "pflicht",
+        "question_1": "Welche Muster beobachtest du in der Art, wie Entscheidungen zu euren Kernaktivitäten wirklich fallen -- und welche Dynamik steckt dahinter?",
+        "question_2": "Was würdest du sehen, wenn du als externer Beobachter auf eure Schlüsselaktivitäten schaust -- was fällt auf, das von innen unsichtbar ist?"
+      },
+      {
+        "field": "kundensegmente",
+        "perspective": "beobachtung",
+        "type": "optional",
+        "question_1": "Welche Kundensegmente werden systemisch bevorzugt -- nicht bewusst, aber durch eingespielte Muster?",
+        "question_2": "Was würde eine Aufstellung deiner Kundensegmente über versteckte Prioritäten und Loyalitäten zeigen?"
+      }
+    ]
+  },
+  {
+    "number": 8,
+    "title": "Praktische Werkzeuge, die wirklich funktionieren I",
+    "subtitle": "Grundlagen und Gesprächswerkzeuge für Organisationen",
+    "description": "Dieses Modul bietet dir die wichtigsten sprachlichen und kognitiven Werkzeuge für systemisches Arbeiten: Hypothesenbildung, Auftragsklärung und zirkuläre Fragen. Du lernst, wie man Probleme nicht vorschnell löst, sondern Hypothesen entwickelt, Kontexte klärt und durch kluge Fragen neue Perspektiven eröffnet.",
+    "tasks": [
+      {
+        "field": "kundenbeziehungen",
+        "perspective": "entscheidung",
+        "type": "pflicht",
+        "question_1": "Welche Hypothese hast du über deine Kunden, die du noch nie wirklich überprüft hast -- und welche Entscheidung basiert darauf?",
+        "question_2": "Was würde passieren, wenn du in einem Kundengespräch erstmal den Auftrag klärst, bevor du eine Lösung anbietest?"
+      },
+      {
+        "field": "schluesselaktivitaeten",
+        "perspective": "entscheidung",
+        "type": "pflicht",
+        "question_1": "Welche deiner Kernaktivitäten beruhen auf einer Hypothese, die nie hinterfragt wurde -- was wäre, wenn sie falsch ist?",
+        "question_2": "Wie entscheidet dein Unternehmen, welche Aktivitäten fortgeführt werden -- auf Basis von Daten oder eingeübten Annahmen?"
+      },
+      {
+        "field": "nutzenversprechen",
+        "perspective": "beobachtung",
+        "type": "pflicht",
+        "question_1": "Was beobachtest du, wenn du dein Nutzenversprechen mit zirkulären Fragen betrachtest -- also aus der Perspektive deines Kunden, deines Teams, deines Wettbewerbers?",
+        "question_2": "Welche Annahme über deinen Mehrwert haben du und dein Team nie laut ausgesprochen -- und was steckt dahinter?"
+      },
+      {
+        "field": "kanaele",
+        "perspective": "beobachtung",
+        "type": "optional",
+        "question_1": "Welche Hypothesen stecken hinter deiner Kanalwahl -- und wann hast du sie zuletzt überprüft?",
+        "question_2": "Was würde eine zirkuläre Frage ans Kundensegment über eure Kanäle enthüllen?"
+      }
+    ]
+  },
+  {
+    "number": 9,
+    "title": "Praktische Werkzeuge, die wirklich funktionieren II",
+    "subtitle": "Methoden für Muster, Dynamiken und Entscheidungsräume",
+    "description": "In diesem Modul entdeckst du Werkzeuge, die über das Gespräch hinausgehen und Dynamiken im Raum erfahrbar machen. So kannst du Blockaden lösen, Entscheidungsräume erweitern und Teams auf eine neue Ebene führen.",
+    "tasks": [
+      {
+        "field": "ressourcen",
+        "perspective": "lernen",
+        "type": "pflicht",
+        "question_1": "Was lernt dein Unternehmen über seine eigenen Ressourcen, wenn du sie durch ein Reflecting Team betrachtest -- was würde von außen sichtbar?",
+        "question_2": "Welche Ressource hältst du für unverzichtbar, die ein Außenstehender vielleicht als Ballast sehen würde?"
+      },
+      {
+        "field": "partnerschaften",
+        "perspective": "lernen",
+        "type": "pflicht",
+        "question_1": "Was zeigt eine Tetralemma-Betrachtung einer schwierigen Partnerschaft -- welche Option jenseits von \\'ja\\' oder \\'nein\\' öffnet sich?",
+        "question_2": "Wie entwickelt sich dein System im Umgang mit Partnerschaftskonflikten -- durch Eskalation, Vermeidung oder Klärung?"
+      },
+      {
+        "field": "schluesselaktivitaeten",
+        "perspective": "beobachtung",
+        "type": "pflicht",
+        "question_1": "Was würde ein Reflecting Team über eine deiner Kernaktivitäten sagen, das du selbst nicht siehst?",
+        "question_2": "Welche Muster in euren Aktivitäten werden erst in der Aufstellung sichtbar -- wer steht für was, und wie stehen sie zueinander?"
+      },
+      {
+        "field": "einnahmequellen",
+        "perspective": "beobachtung",
+        "type": "optional",
+        "question_1": "Welche Einnahmequelle würde eine Tetralemma-Betrachtung in einem neuen Licht erscheinen lassen?",
+        "question_2": "Zwischen \\'diese Einnahme behalten\\' und \\'aufgeben\\' -- was liegt in der Mitte, das du noch nicht gedacht hast?"
+      }
+    ]
+  },
+  {
+    "number": 10,
+    "title": "Menschen halten, Leistung sichern",
+    "subtitle": "Fachkräfte binden, Motivation sichern, Zukunftsfähigkeit stärken",
+    "description": "In diesem Modul erfährst du, wie du Mitarbeiterbindung systemisch gestaltest -- und wie du die Leistungskraft deines Unternehmens sicherst, ohne auf Druck oder kurzfristige Anreize zu setzen.",
+    "tasks": [
+      {
+        "field": "kundenbeziehungen",
+        "perspective": "kultur",
+        "type": "pflicht",
+        "question_1": "Welche kulturellen Parallelen gibt es zwischen der Art, wie du Mitarbeitende hältst -- und wie du Kunden bindest?",
+        "question_2": "Was würden deine Mitarbeitenden über die Kultur sagen, die sie hält -- oder treibt sie weg?"
+      },
+      {
+        "field": "schluesselaktivitaeten",
+        "perspective": "kultur",
+        "type": "pflicht",
+        "question_1": "Welche Kernaktivitäten in deinem Unternehmen erzeugen Sinn und Resonanz -- und welche saugen Energie?",
+        "question_2": "Wie prägt die Kultur, wie Aufgaben verteilt und Leistung anerkannt werden -- was stärkt Bindung, was schwächt sie?"
+      },
+      {
+        "field": "ressourcen",
+        "perspective": "lernen",
+        "type": "pflicht",
+        "question_1": "Wie entwickeln sich deine Mitarbeitenden als wertvollste Ressource -- förderst du Lernen oder forderst du Funktionieren?",
+        "question_2": "Was lernt dein Unternehmen als System über Motivation und Bindung -- und was verändert sich dadurch?"
+      },
+      {
+        "field": "kostenstruktur",
+        "perspective": "lernen",
+        "type": "optional",
+        "question_1": "Was kostet Fluktuation wirklich -- nicht nur in Zahlen, sondern in Kultur, Wissen und Energie?",
+        "question_2": "Wie entscheidest du, was du in Mitarbeiterbindung investierst -- und nach welchen Prämissen?"
+      }
+    ]
+  },
+  {
+    "number": 11,
+    "title": "Die blaue Welt",
+    "subtitle": "Effizienz sichern durch Ordnung, Prozesse und klare Regeln",
+    "description": "Doch viele Unternehmer stecken fest in der blauen Welt, weil sie dort Kontrolle und Berechenbarkeit finden. Dieses Modul zeigt dir, wie du die blaue Welt bewusst einsetzt, um dein Tagesgeschäft stabil und effizient zu halten -- ohne in Bürokratie oder Starrheit zu verfallen.",
+    "tasks": [
+      {
+        "field": "schluesselaktivitaeten",
+        "perspective": "entscheidung",
+        "type": "pflicht",
+        "question_1": "Welche deiner Kernaktivitäten laufen in der blauen Welt -- nach klaren Regeln und Standards -- und welche brauchen eigentlich mehr Spielraum?",
+        "question_2": "Wie entscheidest du, welche Aktivitäten standardisiert werden -- und wo Standardisierung Innovation verhindert?"
+      },
+      {
+        "field": "kostenstruktur",
+        "perspective": "entscheidung",
+        "type": "pflicht",
+        "question_1": "Welche Kosten entstehen durch Übersteuerung und zu viel blauer Welt -- Bürokratie, Kontrolle, Redundanz?",
+        "question_2": "Wie entscheidest du, welche Investitionen in Effizienz sich wirklich lohnen -- und welche nur Kontrolle simulieren?"
+      },
+      {
+        "field": "ressourcen",
+        "perspective": "lernen",
+        "type": "pflicht",
+        "question_1": "Was lernt dein Unternehmen über den richtigen Einsatz von Ressourcen, wenn du Lean-Denken konsequent anwendest?",
+        "question_2": "Wie entwickelt sich dein System, wenn Effizienz nicht als Sparzwang, sondern als Lernprozess verstanden wird?"
+      },
+      {
+        "field": "kanaele",
+        "perspective": "lernen",
+        "type": "optional",
+        "question_1": "Welche Kanäle laufen in der blauen Welt effizient -- und welche müssten in der roten Welt flexibel gestaltet werden?",
+        "question_2": "Wo blockiert zu viel Standardisierung die Anpassungsfähigkeit deiner Kanäle?"
+      }
+    ]
+  },
+  {
+    "number": 12,
+    "title": "Die rote Welt",
+    "subtitle": "Innovation und Dynamik meistern in unsicheren Zeiten",
+    "description": "Die rote Welt lässt sich nicht mit Regeln oder Plänen kontrollieren. Sie verlangt nach anderen Führungsprinzipien: Resonanz, Sinn, Selbstorganisation und der Fähigkeit, mit Unsicherheit konstruktiv umzugehen. In diesem Modul lernst du, wie du dein Unternehmen dynamikrobust machst -- beweglich, anpassungsfähig und zukunftsfähig.",
+    "tasks": [
+      {
+        "field": "nutzenversprechen",
+        "perspective": "kultur",
+        "type": "pflicht",
+        "question_1": "Wie reagiert die Kultur deines Unternehmens auf Dynamik und Unsicherheit -- mit Kontrolle oder mit Resonanz?",
+        "question_2": "Was muss kulturell passieren, damit dein Nutzenversprechen auch in der roten Welt trägt -- wenn alles sich verändert?"
+      },
+      {
+        "field": "kundenbeziehungen",
+        "perspective": "kultur",
+        "type": "pflicht",
+        "question_1": "Wie verändern sich Kundenbeziehungen in der roten Welt -- was brauchen Kunden von dir, wenn der Markt kippt?",
+        "question_2": "Welches kulturelle Muster in deinen Kundenbeziehungen hemmt Anpassungsfähigkeit -- und was wäre das Alternative?"
+      },
+      {
+        "field": "kanaele",
+        "perspective": "beobachtung",
+        "type": "pflicht",
+        "question_1": "Was beobachtest du an deinen Kanälen in dynamischen Märkten -- welche funktionieren noch, welche werden obsolet?",
+        "question_2": "Wie beobachtest du dich selbst als Führungsperson in der roten Welt -- neigst du zu Kontrolle oder zu Loslassen?"
+      },
+      {
+        "field": "einnahmequellen",
+        "perspective": "beobachtung",
+        "type": "optional",
+        "question_1": "Welche Einnahmequellen sind dynamikrobust -- weil sie auf Resonanz und Vertrauen statt auf Preiskampf beruhen?",
+        "question_2": "Welche Einnahmequelle ist in der roten Welt gefährdet -- und was wäre die systemische Alternative?"
+      }
+    ]
+  },
+  {
+    "number": 13,
+    "title": "Systemisch entscheiden",
+    "subtitle": "Prioritäten setzen in komplexen Umfeldern",
+    "description": "Unternehmerinnen und Unternehmer entscheiden täglich -- oft unter Unsicherheit und Zeitdruck. Der größte Hebel ist nicht „mehr Mut\" oder „mehr Daten\", sondern bessere Unterscheidungen: Was ist wirklich entscheidbar? Was gehört auf die Ebene der Entscheidungsprämissen (z. B. Strategie, Werte, Regeln)? Und wo ist Nicht-Entscheiden vorläufig klüger als eine schnelle Festlegung?",
+    "tasks": [
+      {
+        "field": "schluesselaktivitaeten",
+        "perspective": "entscheidung",
+        "type": "pflicht",
+        "question_1": "Welche deiner Kernaktivitäten werden fortgeführt, obwohl nie wirklich entschieden wurde, ob sie noch passen?",
+        "question_2": "Welche Entscheidungsprämissen steuern, was in deinem Unternehmen als Schlüsselaktivität gilt -- und wurden sie je explizit gemacht?"
+      },
+      {
+        "field": "ressourcen",
+        "perspective": "entscheidung",
+        "type": "pflicht",
+        "question_1": "Wie entscheidest du unter Unsicherheit, welche Ressourcen du aufbaust -- und welche du freisetzt?",
+        "question_2": "Welche Ressourcenentscheidung wurde zu lange aufgeschoben -- und was hält dich zurück, sie jetzt zu treffen?"
+      },
+      {
+        "field": "partnerschaften",
+        "perspective": "beobachtung",
+        "type": "pflicht",
+        "question_1": "Welche Partnerschaft wurde nie wirklich entschieden, sondern ist einfach entstanden -- und was folgt daraus?",
+        "question_2": "Was beobachtest du an dir selbst, wenn du Partnerschaftsentscheidungen treffen musst -- wie läuft dein Entscheidungsprozess?"
+      },
+      {
+        "field": "kostenstruktur",
+        "perspective": "beobachtung",
+        "type": "optional",
+        "question_1": "Welche Kostenentscheidungen trefft ihr nach welchen Prämissen -- und sind diese Prämissen noch zeitgemäß?",
+        "question_2": "Was wäre, wenn ihr eine Kostenkategorie komplett neu entscheidet -- was würde sich öffnen?"
+      }
+    ]
+  },
+  {
+    "number": 14,
+    "title": "Strategie neu denken",
+    "subtitle": "Innovation & Angebote zukunftsfähig gestalten",
+    "description": "Strategie ist kein Plan, der die Zukunft festlegt. Strategie ist die Fähigkeit, Anschlussfähigkeit zu gestalten: Dein Angebot muss außen zu Kunden, Partnern und Märkten passen -- und innen zu Strukturen, Fähigkeiten und Kultur. Erst die doppelte Anschlussfähigkeit macht Produkte und Services wirklich zukunftsfähig.",
+    "tasks": [
+      {
+        "field": "nutzenversprechen",
+        "perspective": "entscheidung",
+        "type": "pflicht",
+        "question_1": "Welche Entscheidungsprämissen stecken hinter deinem heutigen Nutzenversprechen -- und sind sie noch strategisch tragfähig?",
+        "question_2": "Welche Entscheidung würde dein Nutzenversprechen wirklich zukunftsfähig machen -- und warum ist sie noch nicht gefallen?"
+      },
+      {
+        "field": "kundensegmente",
+        "perspective": "entscheidung",
+        "type": "pflicht",
+        "question_1": "Welche Segmente bearbeitest du aus strategischer Entscheidung -- und welche aus Gewohnheit oder Zufall?",
+        "question_2": "Welches neue Kundensegment wäre strategisch interessant -- und was hält dich davon ab, es zu erschließen?"
+      },
+      {
+        "field": "einnahmequellen",
+        "perspective": "lernen",
+        "type": "pflicht",
+        "question_1": "Was lernst du über dein Geschäftsmodell, wenn du Einnahmequellen und Nutzenversprechen zusammen betrachtest -- stimmt die Logik noch?",
+        "question_2": "Wie entwickelt sich deine Strategie als Lernprozess -- was hat sich in letzter Zeit verändert und was folgt daraus?"
+      },
+      {
+        "field": "kanaele",
+        "perspective": "lernen",
+        "type": "optional",
+        "question_1": "Welche Kanäle sind strategisch zukunftsfähig -- und welche laufen nur noch aus Trägheit?",
+        "question_2": "Was würde eine strategische Neuentscheidung über Kanäle für dein Gesamtmodell bedeuten?"
+      }
+    ]
+  },
+  {
+    "number": 15,
+    "title": "Systemische Strategie über Output & Produkt",
+    "subtitle": "Wie Output und Produkt strategisch zusammenwirken",
+    "description": "Wie Entscheidungen, Sensemaking und Struktur den Output eines Unternehmens formen -- und wie daraus eine tragfähige Strategiehypothese entsteht.",
+    "tasks": [
+      {
+        "field": "nutzenversprechen",
+        "perspective": "lernen",
+        "type": "pflicht",
+        "question_1": "Was lernst du über deinen Mehrwert, wenn du ihn vom Output her denkst -- was kommt wirklich beim Kunden an?",
+        "question_2": "Wie entwickelt sich dein Nutzenversprechen, wenn du es an echtem Output statt an Absichtserklärungen ausrichtest?"
+      },
+      {
+        "field": "schluesselaktivitaeten",
+        "perspective": "lernen",
+        "type": "pflicht",
+        "question_1": "Welche deiner Kernaktivitäten erzeugen echten Output -- und welche erzeugen nur Aktivität ohne Ergebnis?",
+        "question_2": "Was lernst du über deine Organisation, wenn du Aktivitäten nach ihrem tatsächlichen Output bewertest?"
+      },
+      {
+        "field": "kundensegmente",
+        "perspective": "beobachtung",
+        "type": "pflicht",
+        "question_1": "Was beobachtest du, wenn du deinen Output aus der Kundenperspektive betrachtest -- was landet an, was verfehlt sein Ziel?",
+        "question_2": "Welche Erwartungen erzeugst du mit deinem Output unbewusst -- und passen sie zu dem, was du liefern kannst?"
+      },
+      {
+        "field": "einnahmequellen",
+        "perspective": "beobachtung",
+        "type": "optional",
+        "question_1": "Welche Einnahmequellen korrelieren direkt mit einem klar definierten Output -- und welche nicht?",
+        "question_2": "Was würde sich in deiner Preislogik ändern, wenn du Output statt Aufwand in den Mittelpunkt stellst?"
+      }
+    ]
+  },
+  {
+    "number": 16,
+    "title": "Produkte anschlussfähig machen",
+    "subtitle": "(8-W-Modell)",
+    "description": "Dieses Modul stellt das 8-W-Modell vor, entwickelt es an deinen eigenen Produkten und zeigt, wie du damit Strategie, Marketing und interne Klarheit gleichzeitig erzeugst.",
+    "tasks": [
+      {
+        "field": "nutzenversprechen",
+        "perspective": "kultur",
+        "type": "pflicht",
+        "question_1": "Welches kulturelle Selbstbild steckt in deinem Nutzenversprechen -- und wie unterscheidet es sich vom Fremdbild deiner Kunden?",
+        "question_2": "Was wäre, wenn du dein Nutzenversprechen nicht intern formulierst, sondern gemeinsam mit Kunden entwickelst?"
+      },
+      {
+        "field": "kundensegmente",
+        "perspective": "kultur",
+        "type": "pflicht",
+        "question_1": "Welches Bild hat dein Unternehmen von seinen Kundensegmenten -- und woher kommt dieses Bild kulturell?",
+        "question_2": "Was wird in deiner Unternehmenskultur über bestimmte Kunden erzählt -- und wie beeinflusst das Produktentwicklung?"
+      },
+      {
+        "field": "kanaele",
+        "perspective": "entscheidung",
+        "type": "pflicht",
+        "question_1": "Wie entscheidest du, über welche Kanäle du dein Produkt transportierst -- nach Gewohnheit oder nach Marktlogik?",
+        "question_2": "Welche Kanalentscheidung würde dein Produkt für ein neues Segment anschlussfähig machen?"
+      },
+      {
+        "field": "kundenbeziehungen",
+        "perspective": "entscheidung",
+        "type": "optional",
+        "question_1": "Wie verändert sich die Beziehung zu deinen Kunden, wenn dein Produkt wirklich klar und anschlussfähig kommuniziert ist?",
+        "question_2": "Was würden Kunden sagen, wenn du sie fragst, ob sie dein Produkt anderen erklären könnten -- was fehlt noch?"
+      }
+    ]
+  }
+]

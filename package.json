@@ -1,0 +1,14 @@
+{
+  "name": "sbl-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Systemische Business Landkarte – Plattform für den Systemischer-Kompass",
+  "scripts": {
+    "install:all": "npm install --prefix server && npm install --prefix client",
+    "dev:server": "npm run dev --prefix server",
+    "dev:client": "npm run dev --prefix client",
+    "build:client": "npm run build --prefix client",
+    "seed": "npm run seed --prefix server",
+    "start": "npm run start --prefix server"
+  }
+}

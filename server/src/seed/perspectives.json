@@ -1,0 +1,7 @@
+[
+  { "key": "struktur",     "label": "Struktur-Ebene",     "theorist": "Business Model Canvas – Was tun wir?", "color_hex": "#378ADD", "sort_order": 1 },
+  { "key": "kultur",       "label": "Kultur-Ebene",       "theorist": "Glasl – Wer sind wir und wie ticken wir?", "color_hex": "#D4537E", "sort_order": 2 },
+  { "key": "entscheidung", "label": "Entscheidungs-Ebene","theorist": "Luhmann – Wie treffen wir Entscheidungen?", "color_hex": "#639922", "sort_order": 3 },
+  { "key": "lernen",       "label": "Lern-Ebene",         "theorist": "Maturana/Varela – Wie entwickeln wir uns als System?", "color_hex": "#BA7517", "sort_order": 4 },
+  { "key": "beobachtung",  "label": "Beobachtungs-Ebene", "theorist": "von Foerster – Wie beobachten wir unser Handeln?", "color_hex": "#888780", "sort_order": 5 }
+]
