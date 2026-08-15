@@ -3,6 +3,24 @@
 Webapplikation für das Systemischer-Kompass-Programm: digitale Transferbögen,
 eine Business Landkarte pro Organisation, Aufgabenverwaltung und Gamification.
 
+## Update-Hinweis: nach diesem Code-Update
+
+Dieses Update bringt neue Datenbankspalten/-tabellen mit sich (Aktiv/Inaktiv-Flags bei Modulen und
+Kacheln, konfigurierbare Punktwerte). **Keine Infrastruktur-Änderung nötig** — nur:
+
+1. Die neuen Dateien in dein GitHub-Repo übernehmen (überschreibt `server/src/`, `client/src/`,
+   `server/src/db/schema.sql`, `server/src/seed/seed.js`)
+2. Railway redeployen lassen (automatisch bei Push, oder manuell über "Redeploy")
+3. Einmalig in der Railway-Console erneut ausführen:
+   ```
+   npm run migrate
+   ```
+   (Das Schema ist idempotent — bestehende Daten bleiben unangetastet, es werden nur die neuen
+   Spalten/Tabellen ergänzt.)
+4. `npm run seed` ist **optional** — schadet aber nicht, falls du es laufen lässt: Das Skript wurde
+   so überarbeitet, dass es nie mehr bereits ausgefüllte Postits von Organisationen löscht oder
+   überschreibt, egal wie oft es läuft.
+
 ## Architektur
 
 - **server/** – Node.js + Express API, PostgreSQL als Datenbank
@@ -64,11 +82,12 @@ oder mich bitten, eine Admin-Passwort-Änderungsseite zu ergänzen).
    npm run migrate
    npm run seed
    ```
-5. Beim **client**-Service `VITE_API_PROXY` bzw. die tatsächliche API-Basis-URL
-   entsprechend konfigurieren, falls Client und Server nicht unter derselben Domain laufen
-   (aktuell ist der Vite-Dev-Proxy auf `localhost:4000` fest verdrahtet – für Produktion
-   empfiehlt sich ein Reverse-Proxy oder eine `VITE_API_BASE`-Umgebungsvariable, die ich
-   auf Wunsch ergänze).
+5. Beim **client**-Service als Build-Variable `VITE_API_BASE` auf die volle öffentliche
+   URL des **server**-Service setzen (z. B. `https://sbl-server-production.up.railway.app`,
+   ohne abschließenden Slash). Wichtig: Diese Variable muss zur **Build-Zeit** gesetzt sein
+   (Vite bäckt sie ins JS-Bundle ein) — bei Railway heißt das, sie muss vor dem Build-Schritt
+   verfügbar sein, nicht erst zur Laufzeit. Lokal bzw. wenn Client und Server unter derselben
+   Domain laufen, kann die Variable leer bleiben (siehe `client/.env.example`).
 
 ## Was ist bereits enthalten
 

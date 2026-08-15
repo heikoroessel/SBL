@@ -5,15 +5,16 @@ import { requireOrgUser } from '../middleware/auth.js';
 const router = Router();
 router.use(requireOrgUser);
 
-const POINTS = {
-  postit_pflicht: 10,
-  postit_optional: 10,
-  todo_created: 1,
-  todo_done_rated: 5,
-};
+async function getPointSettings(client) {
+  const result = await client.query('SELECT * FROM point_settings WHERE id = 1');
+  return result.rows[0] || {
+    points_postit_pflicht: 10, points_postit_optional: 10,
+    points_todo_created: 1, points_todo_done_rated: 5,
+  };
+}
 
 async function awardPoints(client, organizationId, points, reason, referenceId) {
-  if (points === 0) return;
+  if (!points) return;
   await client.query(
     'INSERT INTO point_events (organization_id, points, reason, reference_id) VALUES ($1,$2,$3,$4)',
     [organizationId, points, reason, referenceId]
@@ -34,6 +35,12 @@ router.get('/colleagues', async (req, res) => {
     [req.auth.organizationId]
   );
   res.json(result.rows);
+});
+
+// Aktuelle Punktekonfiguration (für die Info-Erklärung im Bearbeiter-Bereich)
+router.get('/points/config', async (req, res) => {
+  const settings = await getPointSettings(pool);
+  res.json(settings);
 });
 
 // ---------- Hausaufgaben (freigegebene, noch nicht abgeschlossene Module) ----------
@@ -57,12 +64,18 @@ router.get('/homework', async (req, res) => {
     const tasks = await pool.query(
       `
       SELECT mt.*, f.label AS field_label, p.label AS perspective_label, p.color_hex,
-        po.id AS postit_id, po.reflection_answer, po.card_title, po.intention, po.is_completed
+        po.id AS postit_id, po.reflection_answer, po.card_title, po.intention, po.is_completed,
+        CASE
+          WHEN po.is_completed IS NOT TRUE THEN NULL
+          WHEN EXISTS (SELECT 1 FROM todos t WHERE t.postit_id = po.id AND NOT t.is_done AND t.due_date IS NOT NULL AND t.due_date < CURRENT_DATE) THEN 'ueberfaellig'
+          WHEN EXISTS (SELECT 1 FROM todos t WHERE t.postit_id = po.id AND NOT t.is_done) THEN 'offen'
+          ELSE 'erledigt'
+        END AS status
       FROM module_tasks mt
       JOIN fields f ON f.key = mt.field_key
       JOIN perspectives p ON p.key = mt.perspective_key
       LEFT JOIN postits po ON po.module_task_id = mt.id AND po.organization_id = $1
-      WHERE mt.module_id = $2
+      WHERE mt.module_id = $2 AND (mt.is_active = true OR po.id IS NOT NULL)
       ORDER BY mt.sort_order
       `,
       [orgId, row.module_id]
@@ -127,8 +140,10 @@ router.put('/postits/task/:moduleTaskId', async (req, res) => {
 
     // Punkte nur beim Übergang "nicht erledigt -> erledigt" vergeben
     if (!wasCompleted && willBeCompleted) {
+      const settings = await getPointSettings(client);
+      const points = taskType === 'pflicht' ? settings.points_postit_pflicht : settings.points_postit_optional;
       const reason = taskType === 'pflicht' ? 'postit_pflicht' : 'postit_optional';
-      await awardPoints(client, orgId, POINTS[reason], reason, postit.id);
+      await awardPoints(client, orgId, points, reason, postit.id);
     }
 
     await client.query('COMMIT');
@@ -151,7 +166,12 @@ router.get('/canvas', async (req, res) => {
     SELECT po.*, mt.field_key, mt.perspective_key, mt.task_type, mt.question_1, mt.question_2,
       p.label AS perspective_label, p.color_hex, m.number AS module_number, m.title AS module_title,
       (SELECT COUNT(*) FROM todos t WHERE t.postit_id = po.id) AS todo_count,
-      (SELECT COUNT(*) FROM todos t WHERE t.postit_id = po.id AND t.is_done) AS todo_done_count
+      (SELECT COUNT(*) FROM todos t WHERE t.postit_id = po.id AND t.is_done) AS todo_done_count,
+      CASE
+        WHEN EXISTS (SELECT 1 FROM todos t WHERE t.postit_id = po.id AND NOT t.is_done AND t.due_date IS NOT NULL AND t.due_date < CURRENT_DATE) THEN 'ueberfaellig'
+        WHEN EXISTS (SELECT 1 FROM todos t WHERE t.postit_id = po.id AND NOT t.is_done) THEN 'offen'
+        ELSE 'erledigt'
+      END AS status
     FROM postits po
     JOIN module_tasks mt ON mt.id = po.module_task_id
     JOIN perspectives p ON p.key = mt.perspective_key
@@ -184,7 +204,8 @@ router.post('/postits/:postitId/todos', async (req, res) => {
        VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *`,
       [req.params.postitId, orgId, description, due_date ?? null, priority ?? 'B', assignee_id ?? req.auth.orgUserId, req.auth.orgUserId]
     );
-    await awardPoints(client, orgId, POINTS.todo_created, 'todo_created', result.rows[0].id);
+    const settings = await getPointSettings(client);
+    await awardPoints(client, orgId, settings.points_todo_created, 'todo_created', result.rows[0].id);
     await client.query('COMMIT');
     res.status(201).json(result.rows[0]);
   } catch (err) {
@@ -207,13 +228,15 @@ router.get('/todos', async (req, res) => {
   const result = await pool.query(
     `
     SELECT t.*, po.card_title, po.module_task_id, mt.field_key, f.label AS field_label,
-      m.number AS module_number, ou.name AS assignee_name
+      m.number AS module_number, m.title AS module_title,
+      ou.name AS assignee_name, creator.name AS created_by_name
     FROM todos t
     JOIN postits po ON po.id = t.postit_id
     JOIN module_tasks mt ON mt.id = po.module_task_id
     JOIN fields f ON f.key = mt.field_key
     JOIN modules m ON m.id = mt.module_id
     LEFT JOIN org_users ou ON ou.id = t.assignee_id
+    LEFT JOIN org_users creator ON creator.id = t.created_by
     WHERE t.organization_id = $1 ${filter}
     ORDER BY t.is_done ASC, t.priority ASC, t.due_date ASC NULLS LAST
     `,
@@ -261,7 +284,8 @@ router.patch('/todos/:id', async (req, res) => {
 
     // Zusatzpunkte fürs Abhaken gibt es nur mit Bewertung, und nur beim Übergang zu erledigt.
     if (!before.is_done && after.is_done && after.rating_stars) {
-      await awardPoints(client, orgId, POINTS.todo_done_rated, 'todo_done_rated', after.id);
+      const settings = await getPointSettings(client);
+      await awardPoints(client, orgId, settings.points_todo_done_rated, 'todo_done_rated', after.id);
     }
 
     await client.query('COMMIT');
@@ -279,6 +303,59 @@ router.patch('/todos/:id', async (req, res) => {
 router.delete('/todos/:id', async (req, res) => {
   await pool.query('DELETE FROM todos WHERE id = $1 AND organization_id = $2', [req.params.id, req.auth.organizationId]);
   res.json({ ok: true });
+});
+
+// ---------- CSV-Export ----------
+
+function csvEscape(value) {
+  if (value === null || value === undefined) return '';
+  const str = String(value);
+  if (/[",\n;]/.test(str)) return `"${str.replace(/"/g, '""')}"`;
+  return str;
+}
+
+router.get('/todos/export', async (req, res) => {
+  const orgId = req.auth.organizationId;
+  const result = await pool.query(
+    `
+    SELECT t.description, t.priority, t.due_date, t.is_done, t.done_at, t.note,
+      m.number AS module_number, f.label AS field_label, po.card_title,
+      ou.name AS assignee_name, creator.name AS created_by_name
+    FROM todos t
+    JOIN postits po ON po.id = t.postit_id
+    JOIN module_tasks mt ON mt.id = po.module_task_id
+    JOIN fields f ON f.key = mt.field_key
+    JOIN modules m ON m.id = mt.module_id
+    LEFT JOIN org_users ou ON ou.id = t.assignee_id
+    LEFT JOIN org_users creator ON creator.id = t.created_by
+    WHERE t.organization_id = $1
+    ORDER BY t.is_done ASC, t.priority ASC, t.due_date ASC NULLS LAST
+    `,
+    [orgId]
+  );
+
+  const header = ['Beschreibung', 'Priorität', 'Termin', 'Status', 'Erledigt am', 'Zuständig', 'Zugewiesen von', 'Modul', 'Feld', 'Postit', 'Notiz'];
+  const lines = [header.join(';')];
+  for (const t of result.rows) {
+    lines.push([
+      csvEscape(t.description),
+      csvEscape(t.priority),
+      csvEscape(t.due_date ? new Date(t.due_date).toLocaleDateString('de-DE') : ''),
+      csvEscape(t.is_done ? 'erledigt' : 'offen'),
+      csvEscape(t.done_at ? new Date(t.done_at).toLocaleDateString('de-DE') : ''),
+      csvEscape(t.assignee_name),
+      csvEscape(t.created_by_name),
+      csvEscape(t.module_number ? `Modul ${t.module_number}` : ''),
+      csvEscape(t.field_label),
+      csvEscape(t.card_title),
+      csvEscape(t.note),
+    ].join(';'));
+  }
+  const csv = '\uFEFF' + lines.join('\r\n'); // BOM für korrekte Umlaute in Excel
+
+  res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+  res.setHeader('Content-Disposition', 'attachment; filename="aufgaben.csv"');
+  res.send(csv);
 });
 
 // ---------- Punkte ----------

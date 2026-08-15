@@ -45,17 +45,48 @@ async function seedModules(client) {
     );
     const moduleId = res.rows[0].id;
 
-    // Vorhandene Tasks für dieses Modul ersetzen (idempotentes Seeding)
-    await client.query('DELETE FROM module_tasks WHERE module_id = $1', [moduleId]);
+    // Sicheres, idempotentes Seeding: bestehende Kacheln (und damit verknüpfte Postits von
+    // Organisationen) werden NIE gelöscht oder ersetzt, nur inhaltlich aktualisiert.
+    const existingRes = await client.query(
+      'SELECT id, field_key, perspective_key FROM module_tasks WHERE module_id = $1',
+      [moduleId]
+    );
+    const existingByKey = new Map();
+    for (const row of existingRes.rows) {
+      existingByKey.set(`${row.field_key}::${row.perspective_key}`, row.id);
+    }
 
     let sortOrder = 0;
+    const seenKeys = new Set();
     for (const t of m.tasks) {
       if (!t.field || !t.perspective) continue;
-      await client.query(
-        `INSERT INTO module_tasks (module_id, field_key, perspective_key, task_type, question_1, question_2, sort_order)
-         VALUES ($1,$2,$3,$4,$5,$6,$7)`,
-        [moduleId, t.field, t.perspective, t.type, t.question_1, t.question_2, sortOrder++]
-      );
+      const key = `${t.field}::${t.perspective}`;
+      seenKeys.add(key);
+      if (existingByKey.has(key)) {
+        await client.query(
+          `UPDATE module_tasks SET task_type=$1, question_1=$2, question_2=$3, sort_order=$4 WHERE id=$5`,
+          [t.type, t.question_1, t.question_2, sortOrder++, existingByKey.get(key)]
+        );
+      } else {
+        await client.query(
+          `INSERT INTO module_tasks (module_id, field_key, perspective_key, task_type, question_1, question_2, sort_order)
+           VALUES ($1,$2,$3,$4,$5,$6,$7)`,
+          [moduleId, t.field, t.perspective, t.type, t.question_1, t.question_2, sortOrder++]
+        );
+      }
+    }
+
+    // Kacheln, die nicht mehr im Seed-Datensatz vorkommen: nur löschen, wenn wirklich noch
+    // niemand geantwortet hat, sonst deaktivieren statt löschen.
+    for (const [key, taskId] of existingByKey) {
+      if (!seenKeys.has(key)) {
+        const used = await client.query('SELECT COUNT(*) FROM postits WHERE module_task_id = $1', [taskId]);
+        if (Number(used.rows[0].count) === 0) {
+          await client.query('DELETE FROM module_tasks WHERE id = $1', [taskId]);
+        } else {
+          await client.query('UPDATE module_tasks SET is_active = false WHERE id = $1', [taskId]);
+        }
+      }
     }
   }
   console.log(`Module geladen: ${modules.length}`);

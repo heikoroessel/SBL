@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
 import { api } from '../lib/api.js';
+import { usePoints } from '../lib/PointsContext.jsx';
+import StatusBadge from './StatusBadge.jsx';
+import TodoDetailModal from './TodoDetailModal.jsx';
 
 export default function PostitModal({ task, onClose, onSaved }) {
   const [reflectionAnswer, setReflectionAnswer] = useState(task.reflection_answer || '');
@@ -10,6 +13,8 @@ export default function PostitModal({ task, onClose, onSaved }) {
   const [todos, setTodos] = useState([]);
   const [colleagues, setColleagues] = useState([]);
   const [newTodo, setNewTodo] = useState({ description: '', due_date: '', priority: 'B', assignee_id: '' });
+  const [activeTodo, setActiveTodo] = useState(null);
+  const points = usePoints();
 
   const postitId = task.postit_id;
 
@@ -33,6 +38,7 @@ export default function PostitModal({ task, onClose, onSaved }) {
         intention,
         mark_completed: markCompleted,
       });
+      points?.refresh();
       onSaved();
     } catch (err) {
       setError(err.message);
@@ -50,30 +56,18 @@ export default function PostitModal({ task, onClose, onSaved }) {
       due_date: newTodo.due_date || undefined,
     });
     setNewTodo({ description: '', due_date: '', priority: 'B', assignee_id: '' });
+    points?.refresh();
     await loadTodos();
   }
 
-  async function toggleDone(todo) {
-    if (!todo.is_done) {
-      const stars = window.prompt('Wie ist es gelaufen? Bewertung 1–5 Sterne eingeben:');
-      if (!stars) return;
-      const ratingText = window.prompt('Kurz beschreiben, was gut / mittelmäßig / nicht gelungen ist (optional):') || '';
-      const shareInGroup = window.confirm('Zusätzlich als Erfolgsgeschichte in der Lerngruppen-Pinnwand teilen?');
-      await api.patch(`/org/todos/${todo.id}`, {
-        is_done: true,
-        rating_stars: Number(stars),
-        rating_text: ratingText,
-        share_in_group: shareInGroup,
-      });
-    } else {
-      await api.patch(`/org/todos/${todo.id}`, { is_done: false });
-    }
+  async function handleTodoSaved() {
+    setActiveTodo(null);
+    points?.refresh();
     await loadTodos();
   }
 
-  async function deleteTodo(id) {
-    if (!window.confirm('Aufgabe wirklich löschen?')) return;
-    await api.del(`/org/todos/${id}`);
+  async function handleTodoDeleted() {
+    setActiveTodo(null);
     await loadTodos();
   }
 
@@ -89,6 +83,7 @@ export default function PostitModal({ task, onClose, onSaved }) {
           </span>
           <span className="dot" style={{ background: task.color_hex }} />
           <span className="small muted">{task.perspective_label}</span>
+          {task.status && <StatusBadge status={task.status} />}
         </div>
         <div className="modal-title mt-8">{task.field_label}</div>
 
@@ -104,6 +99,7 @@ export default function PostitModal({ task, onClose, onSaved }) {
         <div className="field-group">
           <label className="field-label">Kärtchen-Überschrift</label>
           <input className="text-input" value={cardTitle} onChange={(e) => setCardTitle(e.target.value)} placeholder="Kurzer Titel für dieses Postit" />
+          <div className="field-hint">Ein sprechender Name hilft dir später, das Postit auf der Landkarte wiederzufinden.</div>
         </div>
         <div className="field-group">
           <label className="field-label">Was will ich hier leisten?</label>
@@ -128,19 +124,15 @@ export default function PostitModal({ task, onClose, onSaved }) {
           <>
             {todos.length === 0 && <div className="field-hint">Noch keine Aufgaben angelegt.</div>}
             {todos.map((t) => (
-              <div key={t.id} className="panel" style={{ padding: 12, marginBottom: 8, opacity: t.is_done ? 0.6 : 1 }}>
-                <div className="flex justify-between items-center">
-                  <label className="flex gap-8 items-center" style={{ cursor: 'pointer' }}>
-                    <input type="checkbox" checked={t.is_done} onChange={() => toggleDone(t)} />
-                    <span style={{ textDecoration: t.is_done ? 'line-through' : 'none' }}>{t.description}</span>
-                  </label>
-                  <button className="btn btn-danger btn-sm" onClick={() => deleteTodo(t.id)}>Löschen</button>
+              <button key={t.id} className={`todo-card${t.is_done ? ' is-done' : ''}`} onClick={() => setActiveTodo(t)}>
+                <div className={`todo-card-title${t.is_done ? ' done' : ''}`}>{t.description}</div>
+                <div className="todo-card-meta">
+                  <span className="todo-card-meta-item">Priorität {t.priority}</span>
+                  <span className="todo-card-meta-item">{t.due_date ? `fällig ${t.due_date}` : 'kein Termin'}</span>
+                  <span className="todo-card-meta-item">{t.assignee_name || 'nicht zugewiesen'}</span>
+                  {t.is_done && <span className="todo-card-meta-item">✓ erledigt</span>}
                 </div>
-                <div className="small muted mt-8">
-                  Priorität {t.priority} · {t.due_date ? `fällig ${t.due_date}` : 'kein Termin'} · {t.assignee_name || 'nicht zugewiesen'}
-                  {t.rating_stars && <> · {'★'.repeat(t.rating_stars)}{t.rating_text ? ` — ${t.rating_text}` : ''}</>}
-                </div>
-              </div>
+              </button>
             ))}
             <form onSubmit={addTodo} className="mt-16">
               <div className="field-group">
@@ -173,6 +165,16 @@ export default function PostitModal({ task, onClose, onSaved }) {
           </>
         )}
       </div>
+
+      {activeTodo && (
+        <TodoDetailModal
+          todo={activeTodo}
+          colleagues={colleagues}
+          onClose={() => setActiveTodo(null)}
+          onSaved={handleTodoSaved}
+          onDeleted={handleTodoDeleted}
+        />
+      )}
     </div>
   );
 }

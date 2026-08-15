@@ -26,6 +26,7 @@ export default function Canvas() {
       card_title: postit.card_title,
       intention: postit.intention,
       is_completed: postit.is_completed,
+      status: postit.status,
     });
   }
 
@@ -67,10 +68,16 @@ export default function Canvas() {
                     <button
                       key={p.id}
                       className="postit-chip"
-                      style={{ background: p.color_hex }}
+                      style={{ background: p.color_hex, position: 'relative' }}
                       onClick={() => openPostit(p)}
                       title={p.card_title || p.field_label}
                     >
+                      {p.status && (
+                        <span
+                          className={`status-dot ${p.status}`}
+                          style={{ position: 'absolute', top: -3, right: -3, border: '2px solid white' }}
+                        />
+                      )}
                       <span className="chip-title">{p.card_title || `Modul ${p.module_number}`}</span>
                     </button>
                   ))}

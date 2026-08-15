@@ -15,7 +15,6 @@ export default function Progress() {
     api.get(`/admin/learning-groups/${selectedGroup}/progress`).then(setRows);
   }, [selectedGroup]);
 
-  // Gruppiere nach Organisation
   const byOrg = {};
   for (const r of rows) {
     (byOrg[r.organization_id] ||= { name: r.organization_name, modules: [] }).modules.push(r);
@@ -26,8 +25,7 @@ export default function Progress() {
       <div className="page-header">
         <h1 className="page-title">Fortschritt der Hausaufgaben</h1>
         <p className="page-lede">
-          Wer hat welche freigegebene Hausaufgabe erledigt? Die Bearbeitung einzelner To-Dos siehst du hier
-          bewusst nicht — nur die Erledigung der Pflicht- und Wahlfelder je Modul.
+          Wer hat welche freigegebene Hausaufgabe erledigt — inklusive der daraus abgeleiteten Aufgaben.
         </p>
       </div>
 
@@ -47,6 +45,9 @@ export default function Progress() {
                 <th>Modul</th>
                 <th>Pflicht</th>
                 <th>Wahl</th>
+                <th>Aufgaben def.</th>
+                <th>Aufgaben offen</th>
+                <th>Aufgaben erledigt</th>
                 <th>Status</th>
               </tr>
             </thead>
@@ -58,6 +59,9 @@ export default function Progress() {
                     <td>{m.module_number ? `Modul ${m.module_number} — ` : ''}{m.module_title}</td>
                     <td>{m.pflicht_done} / {m.pflicht_total}</td>
                     <td>{m.optional_done} / {m.optional_total}</td>
+                    <td>{m.todos_total}</td>
+                    <td>{m.todos_open}</td>
+                    <td>{m.todos_done}</td>
                     <td>
                       <span className={`badge ${pflichtDone ? 'badge-done' : 'badge-open'}`}>
                         {pflichtDone ? 'Pflicht erledigt' : 'Offen'}

@@ -1,8 +1,10 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../lib/AuthContext.jsx';
+import { usePoints } from '../lib/PointsContext.jsx';
 
 export default function TopBar({ tabs }) {
   const { user, logout } = useAuth();
+  const points = usePoints();
   const navigate = useNavigate();
 
   async function handleLogout() {
@@ -32,6 +34,12 @@ export default function TopBar({ tabs }) {
         ))}
       </div>
       <div className="user-chip">
+        {user?.role === 'org_user' && points?.total !== null && (
+          <span className="points-chip">
+            <span className={`points-value${points.bump ? ' bump' : ''}`}>{points.total}</span>
+            Punkte
+          </span>
+        )}
         <span>{user?.name}{user?.organizationName ? ` · ${user.organizationName}` : ''}</span>
         <button className="logout-link" onClick={handleLogout}>Abmelden</button>
       </div>

@@ -1,4 +1,8 @@
-const BASE = '/api';
+// In der lokalen Entwicklung leer lassen (Vite-Proxy übernimmt /api -> localhost:4000).
+// In Produktion (z.B. Railway, wenn Client und Server auf unterschiedlichen Domains laufen)
+// VITE_API_BASE zur Build-Zeit auf die volle Server-URL setzen, z.B.
+// VITE_API_BASE=https://sbl-server-production.up.railway.app
+const BASE = `${import.meta.env.VITE_API_BASE || ''}/api`;
 
 async function request(path, { method = 'GET', body, params } = {}) {
   let url = `${BASE}${path}`;

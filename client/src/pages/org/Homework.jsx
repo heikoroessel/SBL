@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { api } from '../../lib/api.js';
 import PostitModal from '../../components/PostitModal.jsx';
+import StatusBadge from '../../components/StatusBadge.jsx';
 
 export default function Homework() {
   const [modules, setModules] = useState([]);
@@ -51,19 +52,19 @@ export default function Homework() {
               </div>
             </div>
 
-            <div className="mt-16" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 12 }}>
+            <div className="tile-grid mt-16">
               {m.tasks.map((t) => (
                 <button
                   key={t.id}
                   onClick={() => setActiveTask(t)}
                   className="panel"
-                  style={{ textAlign: 'left', cursor: 'pointer', padding: 14, border: `1px solid ${t.is_completed ? 'var(--line)' : 'var(--line-strong)'}` }}
+                  style={{ textAlign: 'left', cursor: 'pointer', padding: 14, border: `1px solid ${t.is_completed ? 'var(--line)' : 'var(--line-strong)'}`, height: '100%' }}
                 >
                   <div className="flex justify-between items-center">
                     <span className={`badge ${t.task_type === 'pflicht' ? 'badge-pflicht' : 'badge-optional'}`}>
                       {t.task_type === 'pflicht' ? 'Pflicht' : 'Wahl'}
                     </span>
-                    {t.is_completed && <span className="badge badge-done">Erledigt</span>}
+                    {t.status && <StatusBadge status={t.status} />}
                   </div>
                   <div className="flex gap-8 items-center mt-8">
                     <span className="dot" style={{ background: t.color_hex }} />

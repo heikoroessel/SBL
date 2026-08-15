@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react';
 import { api } from '../../lib/api.js';
-
-function Stars({ n }) {
-  return <span style={{ color: 'var(--accent)' }}>{'★'.repeat(n)}{'☆'.repeat(5 - n)}</span>;
-}
+import { usePoints } from '../../lib/PointsContext.jsx';
+import InfoPopover from '../../components/InfoPopover.jsx';
+import StarRating from '../../components/StarRating.jsx';
 
 export default function Fortschritt() {
-  const [summary, setSummary] = useState(null);
   const [groupPoints, setGroupPoints] = useState([]);
   const [pinboardScope, setPinboardScope] = useState('organization');
   const [stories, setStories] = useState([]);
+  const [config, setConfig] = useState(null);
+  const points = usePoints();
 
   useEffect(() => {
-    api.get('/org/points/summary').then(setSummary);
     api.get('/org/points/learning-group').then(setGroupPoints);
+    api.get('/org/points/config').then(setConfig);
   }, []);
 
   useEffect(() => {
@@ -33,8 +33,19 @@ export default function Fortschritt() {
       </div>
 
       <div className="panel">
-        <div className="section-title">Dein Punktekonto</div>
-        <div style={{ fontSize: 40, fontWeight: 800 }}>{summary?.total ?? '…'}</div>
+        <div className="flex items-center gap-8" style={{ marginBottom: 4 }}>
+          <div className="section-title" style={{ marginBottom: 0 }}>Dein Punktekonto</div>
+          <InfoPopover>
+            <strong>So werden Punkte vergeben:</strong>
+            <ul style={{ margin: '8px 0 0', paddingLeft: 18 }}>
+              <li>Pflicht-Postit ausgefüllt: {config?.points_postit_pflicht ?? '…'} Punkte</li>
+              <li>Wahl-Postit ausgefüllt: {config?.points_postit_optional ?? '…'} Punkte</li>
+              <li>Aufgabe angelegt: {config?.points_todo_created ?? '…'} Punkt(e)</li>
+              <li>Aufgabe abgeschlossen (mit Bewertung): {config?.points_todo_done_rated ?? '…'} Punkte</li>
+            </ul>
+          </InfoPopover>
+        </div>
+        <div style={{ fontSize: 40, fontWeight: 800 }}>{points?.total ?? '…'}</div>
       </div>
 
       <div className="panel">
@@ -72,14 +83,13 @@ export default function Fortschritt() {
         {stories.length === 0 ? (
           <div className="empty-state">Noch keine Erfolgsgeschichten geteilt.</div>
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 12, marginTop: 14 }}>
+          <div className="pinboard-masonry mt-16">
             {stories.map((s) => (
-              <div key={s.id} className="panel" style={{ padding: 14 }}>
-                {s.organization_name && <div className="small muted">{s.organization_name}</div>}
-                <div style={{ fontWeight: 700, marginTop: 4 }}>{s.card_title || s.field_label}</div>
-                <div className="small mt-8">{s.description}</div>
-                <div className="mt-8"><Stars n={s.rating_stars} /></div>
-                {s.rating_text && <div className="small muted mt-8">{s.rating_text}</div>}
+              <div key={s.id} className="pinboard-card">
+                {s.organization_name && <div className="pinboard-card-org">{s.organization_name}</div>}
+                <div className="pinboard-card-title">{s.card_title || s.field_label}</div>
+                <div className="pinboard-card-body">{s.rating_text || s.description}</div>
+                <div className="pinboard-card-stars"><StarRating value={s.rating_stars} readOnly /></div>
               </div>
             ))}
           </div>

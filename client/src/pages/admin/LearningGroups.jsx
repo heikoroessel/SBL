@@ -47,6 +47,11 @@ export default function LearningGroups() {
     await load();
   }
 
+  async function toggleGroupActive(g) {
+    await api.patch(`/admin/learning-groups/${g.id}`, { is_active: !g.is_active });
+    await load();
+  }
+
   return (
     <div className="page">
       <div className="page-header">
@@ -90,7 +95,15 @@ export default function LearningGroups() {
         {groups.length === 0 && <div className="empty-state">Noch keine Lerngruppe angelegt.</div>}
         {groups.map((g) => (
           <div key={g.id} style={{ borderTop: '1px solid var(--line)', padding: '14px 0' }}>
-            <div style={{ fontWeight: 700 }}>{g.name}</div>
+            <div className="flex justify-between items-center">
+              <div style={{ fontWeight: 700 }}>
+                {g.name}{' '}
+                {!g.is_active && <span className="badge badge-optional">deaktiviert</span>}
+              </div>
+              <button className="btn btn-ghost btn-sm" onClick={() => toggleGroupActive(g)}>
+                {g.is_active ? 'Deaktivieren' : 'Aktivieren'}
+              </button>
+            </div>
             <div className="flex gap-8 mt-8" style={{ flexWrap: 'wrap' }}>
               {g.organizations.map((o) => (
                 <span key={o.id} className="badge badge-optional" style={{ gap: 6 }}>
