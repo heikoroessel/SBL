@@ -92,6 +92,7 @@ router.put('/postits/task/:moduleTaskId', async (req, res) => {
   const orgId = req.auth.organizationId;
   const { reflection_answer, card_title, intention, mark_completed } = req.body;
   const client = await pool.connect();
+  let postit, wasCompleted, willBeCompleted, taskType;
   try {
     await client.query('BEGIN');
 
@@ -100,17 +101,16 @@ router.put('/postits/task/:moduleTaskId', async (req, res) => {
       await client.query('ROLLBACK');
       return res.status(404).json({ error: 'Feld nicht gefunden.' });
     }
-    const taskType = taskRes.rows[0].task_type;
+    taskType = taskRes.rows[0].task_type;
 
     const existing = await client.query(
       'SELECT * FROM postits WHERE organization_id = $1 AND module_task_id = $2',
       [orgId, req.params.moduleTaskId]
     );
 
-    const wasCompleted = existing.rows[0]?.is_completed || false;
-    const willBeCompleted = mark_completed ?? wasCompleted;
+    wasCompleted = existing.rows[0]?.is_completed || false;
+    willBeCompleted = mark_completed ?? wasCompleted;
 
-    let postit;
     if (existing.rows.length === 0) {
       const insertRes = await client.query(
         `INSERT INTO postits
@@ -138,22 +138,28 @@ router.put('/postits/task/:moduleTaskId', async (req, res) => {
       postit = updateRes.rows[0];
     }
 
-    // Punkte nur beim Übergang "nicht erledigt -> erledigt" vergeben
-    if (!wasCompleted && willBeCompleted) {
-      const settings = await getPointSettings(client);
-      const points = taskType === 'pflicht' ? settings.points_postit_pflicht : settings.points_postit_optional;
-      const reason = taskType === 'pflicht' ? 'postit_pflicht' : 'postit_optional';
-      await awardPoints(client, orgId, points, reason, postit.id);
-    }
-
     await client.query('COMMIT');
-    res.json(postit);
   } catch (err) {
     await client.query('ROLLBACK');
     throw err;
   } finally {
     client.release();
   }
+
+  // Punkte werden bewusst NACH dem Commit und in einer eigenen Verbindung vergeben:
+  // ein Problem bei der Punktevergabe darf niemals das Speichern des Postits selbst verhindern.
+  if (!wasCompleted && willBeCompleted) {
+    try {
+      const settings = await getPointSettings(pool);
+      const points = taskType === 'pflicht' ? settings.points_postit_pflicht : settings.points_postit_optional;
+      const reason = taskType === 'pflicht' ? 'postit_pflicht' : 'postit_optional';
+      await awardPoints(pool, orgId, points, reason, postit.id);
+    } catch (err) {
+      console.error('Punktevergabe für Postit fehlgeschlagen (Postit wurde trotzdem gespeichert):', err);
+    }
+  }
+
+  res.json(postit);
 });
 
 // ---------- Landkarte (Canvas): alle Postits der eigenen Organisation, gruppiert nach Feld ----------
@@ -196,24 +202,20 @@ router.post('/postits/:postitId/todos', async (req, res) => {
   const { description, due_date, priority, assignee_id } = req.body;
   if (!description) return res.status(400).json({ error: 'Beschreibung erforderlich.' });
 
-  const client = await pool.connect();
+  const result = await pool.query(
+    `INSERT INTO todos (postit_id, organization_id, description, due_date, priority, assignee_id, created_by)
+     VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *`,
+    [req.params.postitId, orgId, description, due_date ?? null, priority ?? 'B', assignee_id ?? req.auth.orgUserId, req.auth.orgUserId]
+  );
+
   try {
-    await client.query('BEGIN');
-    const result = await client.query(
-      `INSERT INTO todos (postit_id, organization_id, description, due_date, priority, assignee_id, created_by)
-       VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *`,
-      [req.params.postitId, orgId, description, due_date ?? null, priority ?? 'B', assignee_id ?? req.auth.orgUserId, req.auth.orgUserId]
-    );
-    const settings = await getPointSettings(client);
-    await awardPoints(client, orgId, settings.points_todo_created, 'todo_created', result.rows[0].id);
-    await client.query('COMMIT');
-    res.status(201).json(result.rows[0]);
+    const settings = await getPointSettings(pool);
+    await awardPoints(pool, orgId, settings.points_todo_created, 'todo_created', result.rows[0].id);
   } catch (err) {
-    await client.query('ROLLBACK');
-    throw err;
-  } finally {
-    client.release();
+    console.error('Punktevergabe für neue Aufgabe fehlgeschlagen (Aufgabe wurde trotzdem angelegt):', err);
   }
+
+  res.status(201).json(result.rows[0]);
 });
 
 router.get('/todos', async (req, res) => {
@@ -250,6 +252,7 @@ router.patch('/todos/:id', async (req, res) => {
   const { description, due_date, priority, assignee_id, note, is_done, rating_stars, rating_text, share_in_group } = req.body;
 
   const client = await pool.connect();
+  let after, before;
   try {
     await client.query('BEGIN');
     const existing = await client.query('SELECT * FROM todos WHERE id = $1 AND organization_id = $2', [req.params.id, orgId]);
@@ -257,7 +260,7 @@ router.patch('/todos/:id', async (req, res) => {
       await client.query('ROLLBACK');
       return res.status(404).json({ error: 'Nicht gefunden.' });
     }
-    const before = existing.rows[0];
+    before = existing.rows[0];
     const willBeDone = typeof is_done === 'boolean' ? is_done : before.is_done;
 
     const result = await client.query(
@@ -280,22 +283,27 @@ router.patch('/todos/:id', async (req, res) => {
         typeof share_in_group === 'boolean' ? share_in_group : null, req.params.id,
       ]
     );
-    const after = result.rows[0];
-
-    // Zusatzpunkte fürs Abhaken gibt es nur mit Bewertung, und nur beim Übergang zu erledigt.
-    if (!before.is_done && after.is_done && after.rating_stars) {
-      const settings = await getPointSettings(client);
-      await awardPoints(client, orgId, settings.points_todo_done_rated, 'todo_done_rated', after.id);
-    }
-
+    after = result.rows[0];
     await client.query('COMMIT');
-    res.json(after);
   } catch (err) {
     await client.query('ROLLBACK');
     throw err;
   } finally {
     client.release();
   }
+
+  // Punkte werden bewusst NACH dem Commit und in einer eigenen Verbindung vergeben:
+  // ein Problem bei der Punktevergabe darf niemals das Abschließen der Aufgabe selbst verhindern.
+  if (!before.is_done && after.is_done && after.rating_stars) {
+    try {
+      const settings = await getPointSettings(pool);
+      await awardPoints(pool, orgId, settings.points_todo_done_rated, 'todo_done_rated', after.id);
+    } catch (err) {
+      console.error('Punktevergabe für Aufgabe fehlgeschlagen (Aufgabe wurde trotzdem abgeschlossen):', err);
+    }
+  }
+
+  res.json(after);
 });
 
 // Löschen nur über das Kärtchen (Postit-Detail), nicht aus der Listenansicht heraus –

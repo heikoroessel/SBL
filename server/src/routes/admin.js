@@ -361,8 +361,13 @@ router.get('/learning-groups/:id/progress', async (req, res) => {
 // ---------- Punkte-Einstellungen ----------
 
 router.get('/point-settings', async (req, res) => {
-  const result = await pool.query('SELECT * FROM point_settings WHERE id = 1');
-  res.json(result.rows[0] || null);
+  let result = await pool.query('SELECT * FROM point_settings WHERE id = 1');
+  if (result.rows.length === 0) {
+    // Selbstheilend: falls die Standardzeile aus irgendeinem Grund fehlt, jetzt anlegen.
+    await pool.query('INSERT INTO point_settings (id) VALUES (1) ON CONFLICT (id) DO NOTHING');
+    result = await pool.query('SELECT * FROM point_settings WHERE id = 1');
+  }
+  res.json(result.rows[0]);
 });
 
 router.put('/point-settings', async (req, res) => {

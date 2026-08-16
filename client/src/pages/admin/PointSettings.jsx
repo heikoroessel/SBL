@@ -5,10 +5,22 @@ export default function PointSettings() {
   const [values, setValues] = useState(null);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState('');
+  const [loadError, setLoadError] = useState('');
 
-  useEffect(() => {
-    api.get('/admin/point-settings').then(setValues);
-  }, []);
+  function load() {
+    setLoadError('');
+    api.get('/admin/point-settings')
+      .then((data) => {
+        if (!data) {
+          setLoadError('Es wurden keine Punkte-Einstellungen gefunden.');
+          return;
+        }
+        setValues(data);
+      })
+      .catch((err) => setLoadError(err.message));
+  }
+
+  useEffect(() => { load(); }, []);
 
   function update(key, value) {
     setValues({ ...values, [key]: value });
@@ -30,6 +42,17 @@ export default function PointSettings() {
     } catch (err) {
       setError(err.message);
     }
+  }
+
+  if (loadError) {
+    return (
+      <div className="page">
+        <div className="panel">
+          <div className="error-text">{loadError}</div>
+          <button className="btn btn-ghost btn-sm mt-16" onClick={load}>Erneut versuchen</button>
+        </div>
+      </div>
+    );
   }
 
   if (!values) return <div className="page"><div className="empty-state">Lädt …</div></div>;
