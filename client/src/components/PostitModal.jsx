@@ -137,7 +137,13 @@ export default function PostitModal({ task, onClose, onSaved }) {
             <form onSubmit={addTodo} className="mt-16">
               <div className="field-group">
                 <label className="field-label">Neue Aufgabe</label>
-                <input className="text-input" value={newTodo.description} onChange={(e) => setNewTodo({ ...newTodo, description: e.target.value })} placeholder="Was ist zu tun?" />
+                <input
+                  className="text-input"
+                  value={newTodo.description}
+                  onChange={(e) => setNewTodo({ ...newTodo, description: e.target.value })}
+                  placeholder="Was ist zu tun?"
+                  required
+                />
               </div>
               <div className="flex gap-8">
                 <div className="field-group" style={{ marginBottom: 0 }}>
