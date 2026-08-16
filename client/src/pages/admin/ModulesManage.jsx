@@ -121,16 +121,24 @@ export default function ModulesManage() {
       if (err.message) {
         const wantsDeactivate = window.confirm(`${err.message}\n\nStattdessen deaktivieren?`);
         if (wantsDeactivate) {
-          await api.patch(`/admin/modules/${m.id}`, { is_active: false });
-          await load();
+          try {
+            await api.patch(`/admin/modules/${m.id}`, { is_active: false });
+            await load();
+          } catch (err2) {
+            alert(`Deaktivieren fehlgeschlagen: ${err2.message}`);
+          }
         }
       }
     }
   }
 
   async function toggleModuleActive(m) {
-    await api.patch(`/admin/modules/${m.id}`, { is_active: !m.is_active });
-    await load();
+    try {
+      await api.patch(`/admin/modules/${m.id}`, { is_active: !m.is_active });
+      await load();
+    } catch (err) {
+      alert(`Fehler beim Ändern des Status: ${err.message}`);
+    }
   }
 
   async function saveModuleMeta(m, meta) {
@@ -183,8 +191,12 @@ export default function ModulesManage() {
   }
 
   async function toggleTaskActive(task) {
-    await api.patch(`/admin/module-tasks/${task.id}`, { is_active: !task.is_active });
-    await load();
+    try {
+      await api.patch(`/admin/module-tasks/${task.id}`, { is_active: !task.is_active });
+      await load();
+    } catch (err) {
+      alert(`Fehler beim Ändern des Status: ${err.message}`);
+    }
   }
 
   return (

@@ -10,12 +10,25 @@ async function request(path, { method = 'GET', body, params } = {}) {
     const qs = new URLSearchParams(params).toString();
     if (qs) url += `?${qs}`;
   }
-  const res = await fetch(url, {
-    method,
-    credentials: 'include',
-    headers: body ? { 'Content-Type': 'application/json' } : undefined,
-    body: body ? JSON.stringify(body) : undefined,
-  });
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 20000);
+  let res;
+  try {
+    res = await fetch(url, {
+      method,
+      credentials: 'include',
+      headers: body ? { 'Content-Type': 'application/json' } : undefined,
+      body: body ? JSON.stringify(body) : undefined,
+      signal: controller.signal,
+    });
+  } catch (err) {
+    if (err.name === 'AbortError') {
+      throw new Error('Der Server antwortet nicht (Zeitüberschreitung). Bitte später erneut versuchen.');
+    }
+    throw new Error('Verbindung zum Server fehlgeschlagen.');
+  } finally {
+    clearTimeout(timeoutId);
+  }
   const isJson = res.headers.get('content-type')?.includes('application/json');
   const data = isJson ? await res.json() : null;
   if (!res.ok) {

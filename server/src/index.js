@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import 'express-async-errors';
 
 import authRoutes from './routes/auth.js';
 import adminRoutes from './routes/admin.js';
@@ -28,10 +29,12 @@ app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/org', orgRoutes);
 
-// Zentrales Error-Handling für /api-Routen, damit ein einzelner Fehler den Prozess nicht mitreißt.
+// Zentrales Error-Handling für /api-Routen. Dank express-async-errors werden auch Fehler aus
+// async-Routen (z.B. fehlgeschlagene Datenbankabfragen) hier zuverlässig abgefangen, statt dass
+// die Anfrage stillschweigend hängen bleibt.
 app.use('/api', (err, req, res, next) => {
   console.error(err);
-  res.status(500).json({ error: 'Interner Serverfehler.' });
+  res.status(500).json({ error: err.userMessage || 'Interner Serverfehler.' });
 });
 
 // Gebautes React-Frontend ausliefern (liegt bei Multi-Stage-Docker-Build unter ./public).
