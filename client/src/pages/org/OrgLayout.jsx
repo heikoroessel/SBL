@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import TopBar from '../../components/TopBar.jsx';
+import Footer from '../../components/Footer.jsx';
 import { ToastProvider } from '../../lib/ToastContext.jsx';
 import { PointsProvider } from '../../lib/PointsContext.jsx';
 
@@ -17,6 +18,7 @@ export default function OrgLayout() {
         <div className="app-shell">
           <TopBar tabs={TABS} />
           <Outlet />
+          <Footer />
         </div>
       </PointsProvider>
     </ToastProvider>

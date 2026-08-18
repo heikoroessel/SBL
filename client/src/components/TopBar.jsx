@@ -1,11 +1,14 @@
+import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../lib/AuthContext.jsx';
 import { usePoints } from '../lib/PointsContext.jsx';
+import Logo from './Logo.jsx';
 
 export default function TopBar({ tabs }) {
   const { user, logout } = useAuth();
   const points = usePoints();
   const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   async function handleLogout() {
     await logout();
@@ -14,14 +17,11 @@ export default function TopBar({ tabs }) {
 
   return (
     <div className="topbar">
-      <div className="brand">
-        <div className="brand-mark" />
-        <div className="brand-text">
-          <div className="brand-title">Systemischer Kompass</div>
-          <div className="brand-sub">Business Landkarte</div>
-        </div>
-      </div>
-      <div className="nav-tabs">
+      <NavLink to="/" className="brand-link" onClick={() => setMenuOpen(false)}>
+        <Logo />
+      </NavLink>
+
+      <div className="nav-tabs nav-tabs-desktop">
         {tabs.map((t) => (
           <NavLink
             key={t.to}
@@ -33,7 +33,8 @@ export default function TopBar({ tabs }) {
           </NavLink>
         ))}
       </div>
-      <div className="user-chip">
+
+      <div className="user-chip user-chip-desktop">
         {user?.role === 'org_user' && points?.total !== null && (
           <span className="points-chip">
             <span className={`points-value${points.bump ? ' bump' : ''}`}>{points.total}</span>
@@ -43,6 +44,36 @@ export default function TopBar({ tabs }) {
         <span>{user?.name}{user?.organizationName ? ` · ${user.organizationName}` : ''}</span>
         <button className="logout-link" onClick={handleLogout}>Abmelden</button>
       </div>
+
+      <button className="hamburger-btn" onClick={() => setMenuOpen((o) => !o)} aria-label="Menü öffnen">
+        <span />
+        <span />
+        <span />
+      </button>
+
+      {menuOpen && (
+        <div className="mobile-menu">
+          {user?.role === 'org_user' && points?.total !== null && (
+            <div className="mobile-menu-points">
+              <span className={`points-value${points.bump ? ' bump' : ''}`}>{points.total}</span> Punkte
+            </div>
+          )}
+          {tabs.map((t) => (
+            <NavLink
+              key={t.to}
+              to={t.to}
+              className={({ isActive }) => `mobile-menu-link${isActive ? ' active' : ''}`}
+              end={t.end}
+              onClick={() => setMenuOpen(false)}
+            >
+              {t.label}
+            </NavLink>
+          ))}
+          <div className="mobile-menu-divider" />
+          <div className="mobile-menu-user">{user?.name}{user?.organizationName ? ` · ${user.organizationName}` : ''}</div>
+          <button className="mobile-menu-link" onClick={handleLogout}>Abmelden</button>
+        </div>
+      )}
     </div>
   );
 }

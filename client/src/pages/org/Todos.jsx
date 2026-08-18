@@ -77,7 +77,7 @@ export default function Todos() {
             <input type="checkbox" checked={mineOnly} onChange={(e) => setMineOnly(e.target.checked)} />
             Nur meine Aufgaben anzeigen
           </label>
-          <button className="btn btn-ghost btn-sm" onClick={exportCsv}>Als CSV exportieren</button>
+          <button className="btn btn-ghost btn-sm csv-export-btn" onClick={exportCsv}>Als CSV exportieren</button>
         </div>
       </div>
 

@@ -427,14 +427,14 @@ a { color: inherit; }
 /* ---------- Feste Kachelgrößen (Hausaufgaben-Grid) ---------- */
 
 .tile-grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 236px);
   gap: 12px;
+  align-items: stretch;
 }
 .tile-grid > * {
-  width: 236px;
-  flex: 0 0 236px;
   box-sizing: border-box;
+  height: 100%;
 }
 
 /* ---------- Aufgaben-Karten (statt Tabelle) ---------- */
@@ -485,6 +485,133 @@ a { color: inherit; }
 .pinboard-card-title { font-weight: 700; margin-top: 6px; font-size: 15px; }
 .pinboard-card-body { font-size: 14px; line-height: 1.6; margin-top: 10px; color: var(--ink-soft); }
 .pinboard-card-stars { margin-top: 10px; }
+
+/* ---------- Postit: optisch abgegrenzter Aufgaben-Block ---------- */
+
+.postit-todos-block {
+  background: var(--paper-tint);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+}
+
+.app-footer {
+  padding: 20px 32px;
+  text-align: center;
+  border-top: 1px solid var(--line);
+  background: var(--paper);
+}
+.app-footer-link {
+  font-size: 13px;
+  color: var(--ink-muted);
+  text-decoration: none;
+}
+.app-footer-link:hover {
+  color: var(--ink-soft);
+  text-decoration: underline;
+}
+
+/* ---------- Brand link (logo wrapper) ---------- */
+
+.brand-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ---------- Hamburger menu (mobile nav) ---------- */
+
+.hamburger-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  padding: 0;
+  align-items: center;
+}
+.hamburger-btn span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--ink);
+}
+
+.mobile-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: 0;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  padding: 12px 20px 20px;
+  z-index: 45;
+}
+.mobile-menu-points {
+  font-size: 14px;
+  font-weight: 700;
+  padding: 10px 4px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 6px;
+}
+.mobile-menu-link {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 12px 4px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  background: none;
+  border: none;
+  text-decoration: none;
+}
+.mobile-menu-link.active {
+  color: var(--ink);
+}
+.mobile-menu-divider {
+  height: 1px;
+  background: var(--line);
+  margin: 8px 0;
+}
+.mobile-menu-user {
+  font-size: 13px;
+  color: var(--ink-muted);
+  padding: 4px;
+}
+
+/* ---------- Legende (Landkarte) ---------- */
+
+.legend-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.legend-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: var(--paper);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+.legend-popover-title {
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+/* ---------- Poster-Stil: flächige Feld-Hintergründe ---------- */
+/* siehe .canvas-cell weiter unten (Original-Regel angepasst statt Duplikat) */
 
 .dot {
   width: 9px;
@@ -567,10 +694,10 @@ table.data-table {
 .canvas-cell {
   grid-column: var(--gc);
   grid-row: var(--gr);
-  background: var(--paper);
-  border: 1px solid var(--line);
+  background: var(--paper-tint);
+  border: 1px solid var(--line-strong);
   border-radius: var(--radius-lg);
-  padding: 14px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   min-width: 0;
@@ -621,6 +748,43 @@ table.data-table {
   .canvas-cell {
     grid-column: auto !important;
     grid-row: auto !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .canvas-grid {
+    grid-template-columns: 1fr;
+  }
+  .tile-grid {
+    grid-template-columns: 1fr;
+  }
+  .nav-tabs-desktop,
+  .user-chip-desktop {
+    display: none;
+  }
+  .hamburger-btn {
+    display: flex;
+  }
+  .topbar {
+    position: relative;
+    padding: 14px 20px;
+  }
+  .page {
+    padding: 24px 18px 60px;
+  }
+  .page-title {
+    font-size: 23px;
+  }
+  .csv-export-btn {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+  .pinboard-scope-toggle .btn {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+  .pinboard-masonry {
+    columns: 1;
   }
 }
 

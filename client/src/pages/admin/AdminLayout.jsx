@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import TopBar from '../../components/TopBar.jsx';
+import Footer from '../../components/Footer.jsx';
 
 const TABS = [
   { to: '/admin/organizations', label: 'Organisationen' },
@@ -15,6 +16,7 @@ export default function AdminLayout() {
     <div className="app-shell">
       <TopBar tabs={TABS} />
       <Outlet />
+      <Footer />
     </div>
   );
 }

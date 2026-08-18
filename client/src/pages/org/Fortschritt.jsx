@@ -64,7 +64,7 @@ export default function Fortschritt() {
       <div className="panel">
         <div className="flex justify-between items-center">
           <div className="section-title" style={{ marginBottom: 0 }}>Pinnwand</div>
-          <div className="flex gap-8">
+          <div className="flex gap-8 pinboard-scope-toggle">
             <button
               className={`btn btn-sm ${pinboardScope === 'organization' ? 'btn-primary' : 'btn-ghost'}`}
               onClick={() => setPinboardScope('organization')}

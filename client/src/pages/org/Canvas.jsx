@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { api } from '../../lib/api.js';
 import PostitModal from '../../components/PostitModal.jsx';
+import InfoPopover from '../../components/InfoPopover.jsx';
 
 export default function Canvas() {
   const [fields, setFields] = useState([]);
+  const [perspectives, setPerspectives] = useState([]);
   const [activeTask, setActiveTask] = useState(null);
   const [openField, setOpenField] = useState(null);
 
@@ -11,6 +13,9 @@ export default function Canvas() {
     setFields(await api.get('/org/canvas'));
   }
   useEffect(() => { load(); }, []);
+  useEffect(() => {
+    api.get('/org/reference').then((ref) => setPerspectives(ref.perspectives));
+  }, []);
 
   function openPostit(postit) {
     setActiveTask({
@@ -45,6 +50,23 @@ export default function Canvas() {
           Jedes Feld sammelt über die Lektionen hinweg Postits aus unterschiedlichen Perspektiven.
           Klick auf ein Postit, um Details zu sehen oder weiterzubearbeiten.
         </p>
+      </div>
+
+      <p className="small muted" style={{ marginBottom: 10 }}>
+        Basis ist das klassische Business Model Canvas, ergänzt um vier systemische Perspektiven — tippe auf das <span className="info-icon" style={{ display: 'inline-flex' }}>i</span> für Hintergrund.
+      </p>
+
+      <div className="legend-bar">
+        {perspectives.map((p) => (
+          <span key={p.key} className="legend-chip">
+            <span className="dot" style={{ background: p.color_hex }} />
+            {p.label}
+            <InfoPopover>
+              <div className="legend-popover-title">{p.label}</div>
+              {p.theorist}
+            </InfoPopover>
+          </span>
+        ))}
       </div>
 
       <div className="canvas-grid">

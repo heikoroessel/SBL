@@ -3,9 +3,11 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import path from 'path';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 import 'express-async-errors';
 
+import { pool } from './db/pool.js';
 import authRoutes from './routes/auth.js';
 import adminRoutes from './routes/admin.js';
 import orgRoutes from './routes/org.js';
@@ -48,6 +50,23 @@ app.get(/^(?!\/api).*/, (req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`SBL-Server läuft auf Port ${PORT}`);
+// Schema bei jedem Start automatisch anwenden - idempotent (CREATE TABLE IF NOT EXISTS /
+// ADD COLUMN IF NOT EXISTS), damit ein manuell vergessenes `npm run migrate` nie wieder zu
+// fehlenden Tabellen/Spalten führt. Der Server startet trotzdem, falls das mal fehlschlägt
+// (z.B. kurzzeitig keine DB-Verbindung) - dann greift beim ersten echten Request die normale
+// Fehlerbehandlung.
+async function applySchemaOnBoot() {
+  try {
+    const schema = fs.readFileSync(path.join(__dirname, 'db', 'schema.sql'), 'utf-8');
+    await pool.query(schema);
+    console.log('Datenbankschema beim Start geprüft/aktualisiert.');
+  } catch (err) {
+    console.error('Automatisches Schema-Update beim Start fehlgeschlagen:', err);
+  }
+}
+
+applySchemaOnBoot().then(() => {
+  app.listen(PORT, () => {
+    console.log(`SBL-Server läuft auf Port ${PORT}`);
+  });
 });

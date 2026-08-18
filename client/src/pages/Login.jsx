@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../lib/AuthContext.jsx';
+import Logo from '../components/Logo.jsx';
 
 export default function Login() {
   const { login } = useAuth();
@@ -27,12 +28,8 @@ export default function Login() {
   return (
     <div className="login-shell">
       <div className="login-card">
-        <div className="brand" style={{ marginBottom: 24 }}>
-          <div className="brand-mark" />
-          <div className="brand-text">
-            <div className="brand-title">Systemischer Kompass</div>
-            <div className="brand-sub">Business Landkarte</div>
-          </div>
+        <div style={{ marginBottom: 24 }}>
+          <Logo />
         </div>
         <div className="login-title">Anmelden</div>
         <div className="login-sub">Mit deiner hinterlegten E-Mail-Adresse und deinem Passwort.</div>
