@@ -71,6 +71,13 @@ export default function Organizations() {
     await loadUsers(orgId);
   }
 
+  async function deleteUser(user, orgId) {
+    if (!window.confirm(`Bearbeiter „${user.name}" (${user.email}) endgültig löschen? Die E-Mail-Adresse wird dadurch wieder frei.`)) return;
+    await api.del(`/admin/users/${user.id}`);
+    await loadUsers(orgId);
+    await load();
+  }
+
   return (
     <div className="page">
       <div className="page-header">
@@ -132,6 +139,9 @@ export default function Organizations() {
                           </button>
                           <button className="btn btn-ghost btn-sm" onClick={() => resetPassword(u.id, org.id)}>
                             Passwort zurücksetzen
+                          </button>
+                          <button className="btn btn-danger btn-sm" onClick={() => deleteUser(u, org.id)}>
+                            Löschen
                           </button>
                         </td>
                       </tr>

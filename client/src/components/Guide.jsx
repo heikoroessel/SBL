@@ -104,7 +104,7 @@ const SECTIONS = [
   {
     id: 'fortschritt',
     label: 'Fortschritt',
-    title: 'Was bedeuten die Punkte?',
+    title: 'Punkte, Vergleich und Pinnwand',
     body: (
       <>
         <p>
@@ -113,8 +113,18 @@ const SECTIONS = [
           erfährst du genau, wofür es wie viele Punkte gibt.
         </p>
         <p className="mt-8">
-          Unter „Fortschritt" siehst du außerdem, wie deine Organisation im Vergleich zu den anderen
-          in deiner Lerngruppe steht, und eine Pinnwand mit geteilten Erfolgsgeschichten.
+          Unter „Fortschritt" siehst du außerdem einen Vergleich: alle Organisationen deiner
+          Lerngruppe stehen dort gemeinsam mit ihrem Punktestand nebeneinander — so seht ihr, wie
+          weit die Gruppe insgesamt ist, und könnt euch gegenseitig anspornen.
+        </p>
+        <p className="mt-8">
+          Wenn du eine Aufgabe abschließt, kannst du sie bewerten und beschreiben, was gut gelaufen
+          ist. Dieser Eintrag landet automatisch auf der <strong>Pinnwand deiner eigenen
+          Organisation</strong> — so habt ihr intern eine gemeinsame Übersicht, was funktioniert hat
+          und was nicht. Zusätzlich kannst du dabei ankreuzen „zusätzlich in der Lerngruppe teilen":
+          Dann erscheint dieselbe Erkenntnis auch auf der Pinnwand der ganzen Lerngruppe — für die
+          Learnings, die du für andere interessant findest. Zwischen beiden Pinnwänden (eigene
+          Organisation / Lerngruppe) kannst du oben auf der Fortschritt-Seite umschalten.
         </p>
       </>
     ),

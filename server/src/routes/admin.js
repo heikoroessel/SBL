@@ -95,6 +95,12 @@ router.post('/users/:id/reset-password', async (req, res) => {
   res.json({ ok: true });
 });
 
+// Endgültig löschen (z.B. bei fälschlicher Zuordnung) — gibt die E-Mail-Adresse wieder frei.
+router.delete('/users/:id', async (req, res) => {
+  await pool.query('DELETE FROM org_users WHERE id = $1', [req.params.id]);
+  res.json({ ok: true });
+});
+
 // ---------- Lerngruppen ----------
 
 router.get('/learning-groups', async (req, res) => {
