@@ -495,6 +495,49 @@ a { color: inherit; }
   padding: 18px;
 }
 
+/* ---------- Guide ---------- */
+
+.guide-card {
+  max-width: 640px;
+}
+.guide-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 14px;
+}
+.guide-nav-item {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: var(--paper);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+.guide-nav-item.active {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+.help-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  background: var(--paper);
+  color: var(--ink-soft);
+  font-weight: 700;
+  font-size: 14px;
+}
+.help-btn:hover {
+  background: var(--paper-tint);
+}
+
 .app-footer {
   padding: 20px 32px;
   text-align: center;
@@ -603,6 +646,16 @@ a { color: inherit; }
   font-size: 13px;
   font-weight: 600;
   color: var(--ink-soft);
+  cursor: pointer;
+}
+.legend-chip.active {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+.legend-chip.active .dot {
+  outline: 2px solid white;
+  outline-offset: 1px;
 }
 .legend-popover-title {
   font-weight: 700;
@@ -694,7 +747,7 @@ table.data-table {
 .canvas-cell {
   grid-column: var(--gc);
   grid-row: var(--gr);
-  background: var(--paper-tint);
+  background: var(--paper);
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-lg);
   padding: 16px;

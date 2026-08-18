@@ -28,8 +28,10 @@ CREATE TABLE IF NOT EXISTS org_users (
   password_hash  TEXT,
   name           TEXT NOT NULL,
   is_active      BOOLEAN NOT NULL DEFAULT true,
+  guide_dismissed BOOLEAN NOT NULL DEFAULT false,
   created_at     TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+ALTER TABLE org_users ADD COLUMN IF NOT EXISTS guide_dismissed BOOLEAN NOT NULL DEFAULT false;
 
 -- ============ Lerngruppen ============
 

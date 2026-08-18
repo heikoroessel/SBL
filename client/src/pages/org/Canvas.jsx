@@ -8,6 +8,7 @@ export default function Canvas() {
   const [perspectives, setPerspectives] = useState([]);
   const [activeTask, setActiveTask] = useState(null);
   const [openField, setOpenField] = useState(null);
+  const [filterPerspective, setFilterPerspective] = useState(null);
 
   async function load() {
     setFields(await api.get('/org/canvas'));
@@ -58,22 +59,37 @@ export default function Canvas() {
 
       <div className="legend-bar">
         {perspectives.map((p) => (
-          <span key={p.key} className="legend-chip">
+          <button
+            key={p.key}
+            className={`legend-chip${filterPerspective === p.key ? ' active' : ''}`}
+            onClick={() => setFilterPerspective((cur) => (cur === p.key ? null : p.key))}
+            style={{ border: filterPerspective === p.key ? undefined : undefined }}
+          >
             <span className="dot" style={{ background: p.color_hex }} />
             {p.label}
-            <InfoPopover>
-              <div className="legend-popover-title">{p.label}</div>
-              {p.theorist}
-            </InfoPopover>
-          </span>
+            <span onClick={(e) => e.stopPropagation()}>
+              <InfoPopover>
+                <div className="legend-popover-title">{p.label}</div>
+                {p.theorist}
+              </InfoPopover>
+            </span>
+          </button>
         ))}
+        {filterPerspective && (
+          <button className="legend-chip" onClick={() => setFilterPerspective(null)}>
+            Filter zurücksetzen ×
+          </button>
+        )}
       </div>
 
       <div className="canvas-grid">
         {fields.map((f) => {
           const isOpen = openField === f.key;
-          const visible = isOpen ? f.postits : f.postits.slice(0, VISIBLE_LIMIT);
-          const hidden = f.postits.length - visible.length;
+          const filteredPostits = filterPerspective
+            ? f.postits.filter((p) => p.perspective_key === filterPerspective)
+            : f.postits;
+          const visible = isOpen ? filteredPostits : filteredPostits.slice(0, VISIBLE_LIMIT);
+          const hidden = filteredPostits.length - visible.length;
           return (
             <div
               key={f.key}
@@ -82,8 +98,8 @@ export default function Canvas() {
             >
               <div className="canvas-cell-title">{f.label}</div>
               <div className="canvas-cell-sub">{f.subtitle}</div>
-              {f.postits.length === 0 ? (
-                <div className="small muted">Noch keine Postits</div>
+              {filteredPostits.length === 0 ? (
+                <div className="small muted">{filterPerspective ? 'Keine Postits dieser Perspektive' : 'Noch keine Postits'}</div>
               ) : (
                 <div className="postit-fan">
                   {visible.map((p) => (
@@ -112,7 +128,7 @@ export default function Canvas() {
                       +{hidden} weitere
                     </button>
                   )}
-                  {isOpen && f.postits.length > VISIBLE_LIMIT && (
+                  {isOpen && filteredPostits.length > VISIBLE_LIMIT && (
                     <button className="postit-chip" style={{ background: 'var(--line-strong)', color: 'var(--ink)' }} onClick={() => setOpenField(null)}>
                       einklappen
                     </button>

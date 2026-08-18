@@ -4,7 +4,7 @@ import { useAuth } from '../lib/AuthContext.jsx';
 import { usePoints } from '../lib/PointsContext.jsx';
 import Logo from './Logo.jsx';
 
-export default function TopBar({ tabs }) {
+export default function TopBar({ tabs, onOpenGuide }) {
   const { user, logout } = useAuth();
   const points = usePoints();
   const navigate = useNavigate();
@@ -35,6 +35,9 @@ export default function TopBar({ tabs }) {
       </div>
 
       <div className="user-chip user-chip-desktop">
+        {onOpenGuide && (
+          <button className="help-btn" onClick={onOpenGuide} title="Einführung anzeigen">?</button>
+        )}
         {user?.role === 'org_user' && points?.total !== null && (
           <span className="points-chip">
             <span className={`points-value${points.bump ? ' bump' : ''}`}>{points.total}</span>
@@ -71,6 +74,11 @@ export default function TopBar({ tabs }) {
           ))}
           <div className="mobile-menu-divider" />
           <div className="mobile-menu-user">{user?.name}{user?.organizationName ? ` · ${user.organizationName}` : ''}</div>
+          {onOpenGuide && (
+            <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); onOpenGuide(); }}>
+              ? Einführung anzeigen
+            </button>
+          )}
           <button className="mobile-menu-link" onClick={handleLogout}>Abmelden</button>
         </div>
       )}

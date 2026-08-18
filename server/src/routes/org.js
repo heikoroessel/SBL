@@ -43,6 +43,19 @@ router.get('/points/config', async (req, res) => {
   res.json(settings);
 });
 
+// ---------- In-App-Guide ----------
+
+router.get('/guide-status', async (req, res) => {
+  const result = await pool.query('SELECT guide_dismissed FROM org_users WHERE id = $1', [req.auth.orgUserId]);
+  res.json({ dismissed: result.rows[0]?.guide_dismissed || false });
+});
+
+router.patch('/guide-status', async (req, res) => {
+  const { dismissed } = req.body;
+  await pool.query('UPDATE org_users SET guide_dismissed = $1 WHERE id = $2', [!!dismissed, req.auth.orgUserId]);
+  res.json({ dismissed: !!dismissed });
+});
+
 // ---------- Hausaufgaben (freigegebene, noch nicht abgeschlossene Module) ----------
 
 router.get('/homework', async (req, res) => {

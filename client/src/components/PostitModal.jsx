@@ -78,21 +78,23 @@ export default function PostitModal({ task, onClose, onSaved }) {
       <div className="modal-card" onClick={(e) => e.stopPropagation()} style={{ position: 'relative' }}>
         <button className="modal-close" onClick={onClose}>×</button>
 
-        {/* Kärtchen-Überschrift ganz oben — betitelt das gesamte Postit */}
-        <div className="field-group mt-8">
-          <label className="field-label">Kärtchen-Überschrift</label>
-          <input className="text-input" value={cardTitle} onChange={(e) => setCardTitle(e.target.value)} placeholder="Kurzer Titel für dieses Postit" />
-          <div className="field-hint">Ein sprechender Name hilft dir später, das Postit auf der Landkarte wiederzufinden.</div>
-        </div>
+        {/* Haupttitel */}
+        <p className="small muted mt-8">Postit für {task.field_label} im Business Model Canvas</p>
 
-        <div className="flex gap-8 items-center mt-16">
+        <div className="flex gap-8 items-center mt-8">
           <span className={`badge ${task.task_type === 'pflicht' ? 'badge-pflicht' : 'badge-optional'}`}>
             {task.task_type === 'pflicht' ? 'Pflicht' : 'Wahl'}
           </span>
           <span className="dot" style={{ background: task.color_hex }} />
           <span className="small muted">{task.perspective_label}</span>
-          <span style={{ fontWeight: 700 }}>· {task.field_label}</span>
           {task.status && <StatusBadge status={task.status} />}
+        </div>
+
+        {/* Kärtchen-Überschrift — prominent */}
+        <div className="field-group mt-16">
+          <label className="field-label" style={{ fontSize: 15 }}>Kärtchen-Überschrift</label>
+          <input className="text-input" style={{ fontSize: 17, fontWeight: 700, padding: '12px 14px' }} value={cardTitle} onChange={(e) => setCardTitle(e.target.value)} placeholder="Kurzer Titel für dieses Postit" />
+          <div className="field-hint">Ein sprechender Name hilft dir später, das Postit auf der Landkarte wiederzufinden.</div>
         </div>
 
         {/* Block 1: das Postit selbst — Reflexion und Veränderungswunsch */}
@@ -115,14 +117,9 @@ export default function PostitModal({ task, onClose, onSaved }) {
 
           {error && <div className="error-text">{error}</div>}
 
-          <div className="flex gap-8 mt-16">
-            <button className="btn btn-ghost" onClick={() => handleSave(task.is_completed)} disabled={saving}>
-              Zwischenspeichern
-            </button>
-            <button className="btn btn-accent" onClick={() => handleSave(true)} disabled={saving}>
-              {task.is_completed ? 'Änderungen speichern' : 'Postit fertigstellen'}
-            </button>
-          </div>
+          <button className="btn btn-accent mt-16" onClick={() => handleSave(true)} disabled={saving}>
+            Speichern
+          </button>
         </div>
 
         {/* Block 2: Aufgaben — optisch klar abgegrenzt als Fortsetzung */}
